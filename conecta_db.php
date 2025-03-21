@@ -4,10 +4,10 @@
         //Retorna o objeto da Conexão.
         
 	function conecta_db(){
-		$db_name = "db_teste";
+		$db_name = "db_achei";
 		$user 	 = "root";
 		$pass    = "";
-		$server  = "localhost:3307";
+		$server  = "localhost:3306";
 		$conexao = new mysqli($server, $user, $pass, $db_name);
 		return $conexao;
 	}
