@@ -1,4 +1,4 @@
-create table Cadastro_usuario(
+create table Usuario(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     nome_usuario VARCHAR(20),
