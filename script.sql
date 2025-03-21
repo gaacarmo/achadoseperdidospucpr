@@ -1,3 +1,6 @@
+create database db_achei;
+use db_achei;
+
 create table Usuario(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
