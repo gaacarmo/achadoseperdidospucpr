@@ -6,7 +6,7 @@ include("conecta_db");
 $obj = conect_db();
 
 // Corrigido o SQL
-$stmt = $obj->prepare("SELECT nome_usuario, senha FROM Usuario WHERE nome_usuario = ?");
+$stmt = $obj->prepare("SELECT nome_usuario FROM Usuario WHERE nome_usuario = ?");
 $stmt->bind_param("s", $_POST['nomeUsuario']);
 $stmt->execute();
 $resultado = $stmt->get_result();
@@ -14,8 +14,7 @@ $resultado = $stmt->get_result();
 if ($resultado->num_rows > 0) {
     $user = $resultado->fetch_assoc();
 
-    // Aqui corrigido para $_POST['confirmar_senha']
-    if ($_POST['confirmar_senha'] == $user['senha']) {
+    if ($_POST['senha'] == $user['senha']) {
         $_SESSION['is_logged'] = true;
         header("location: index.php");
         exit;
