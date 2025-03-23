@@ -7,7 +7,7 @@ $obj = conecta_db();
 
 // Corrigido o SQL
 $stmt = $obj->prepare("SELECT nome_usuario FROM Usuario WHERE nome_usuario = ?");
-$stmt->bind_param("s", $_POST['nomeUsuario']);
+$stmt->bind_param("s", $_POST['nome_usuario']);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
@@ -45,7 +45,7 @@ if ($resultado->num_rows > 0) {
         <form method="POST">
             <div class="form-group">
                 <label for="email">Nome de usuário:</label>
-                <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" required>
+                <input type="text" class="form-control" id="nomeUsuario" name="nome_usuario" required>
             </div>
 
             <div class="form-group">
