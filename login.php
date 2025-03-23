@@ -1,9 +1,9 @@
 <?php
+require_once 'conecta_db.php';
 session_start();
 
-include("conecta_db");
 
-$obj = conect_db();
+$obj = conecta_db();
 
 // Corrigido o SQL
 $stmt = $obj->prepare("SELECT nome_usuario FROM Usuario WHERE nome_usuario = ?");

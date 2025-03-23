@@ -1,6 +1,7 @@
 <?php
+require_once 'conexao.php';
 // Inclui o arquivo com a função de conexão
-include('conecta_db.php');
+
 
 // Verifica se o formulário foi enviado
 if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_POST['email'])) {
