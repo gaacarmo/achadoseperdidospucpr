@@ -1,15 +1,15 @@
 <?php
 require_once 'conecta_db.php';
-// Inclui o arquivo com a função de conexão
+//Inclui o arquivo com a função de conexão
 
 
-// Verifica se o formulário foi enviado
+//Verifica se o formulário foi enviado
 if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_POST['email'])) {
     $email = $_POST['email'];
     $nova_senha = $_POST['nova_senha'];
     $confirmar_senha = $_POST['confirmar_senha'];
 
-    // Verifica se as senhas coincidem
+    //Verifica se as senhas coincidem
     if ($nova_senha !== $confirmar_senha) {
         echo "<span class='alert alert-danger'>
             <h5>As senhas digitadas não coincidem. Tente novamente.</h5>
@@ -17,10 +17,10 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         exit();
     }
 
-    // Conecta ao banco de dados
+    //Conecta ao banco de dados
     $obj = conecta_db();
 
-    // Verifica se o email existe e recupera a senha atual
+    //Verifica se o email existe e recupera a senha atual
     $query_check = "SELECT senha FROM Usuario WHERE email = '".$email."'";
     $resultado_check = $obj->query($query_check);
 
@@ -34,7 +34,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
     $usuario = $resultado_check->fetch_assoc();
     $senha_atual = $usuario['senha'];
 
-    // Verifica se a nova senha é igual à senha atual
+    //Verifica se a nova senha é igual à senha atual
     if ($nova_senha === $senha_atual) {
         echo "<span class='alert alert-danger'>
             <h5>A nova senha não pode ser igual à senha atual.</h5>
@@ -42,7 +42,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         exit();
     }
 
-    // Atualiza a senha no banco de dados
+    //Atualiza a senha no banco de dados
     $query = "
         UPDATE Usuario 
         SET senha = '".$nova_senha."' 
@@ -55,7 +55,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         echo "<span class='alert alert-success'>
             <h5>Senha atualizada com sucesso! Redirecionando para a página de login...</h5>
             </span>";
-        header("Refresh: 3; url=login.php"); // Redireciona após 3 segundos
+        header("Refresh: 3; url=login.php"); //Redireciona após 3 segundos
     } else {
         echo "<span class='alert alert-danger'>
             <h5>Erro ao atualizar a senha.</h5>
