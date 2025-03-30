@@ -2,7 +2,7 @@
 
 <?php
 
-require_once "conecta_db.php";
+require_once "../paginas/conecta_db.php";
 $conexao = conecta_db();
 
 
