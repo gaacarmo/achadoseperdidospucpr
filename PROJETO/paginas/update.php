@@ -92,7 +92,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
                 <label for="confirmar_senha">Confirmar Nova Senha:</label>
                 <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha" required>
             </div>
-            <button type="submit" class="btn btn-primary">Atualizar Senha</button>
+            <button type="submit" class="btn btn-danger w-50">Atualizar Senha</button>
         </form>
     </div>
 </body>

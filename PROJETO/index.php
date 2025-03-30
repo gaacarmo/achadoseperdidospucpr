@@ -3,9 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME - Achei na PUCPR</title>
+    <title>AcheiNaPuc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 25%;
+            height: 100vh;
+            background-color: #ffffff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .nav-item {
+            width: 100%;
+        }
+
+        .sidebar .nav-link {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: black;
+            text-decoration: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 25px;
+            transition: background 0.2s;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #e8f5fe;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 15px;
+            font-size: 22px;
+        }
+
+        .content {
+            width: 50%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile {
+            width: 25%;
+            height: 100vh;
+            background-color: #ffffff;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .profile p {
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Home - Em desenvolvimento</h1>
+    <div class="sidebar">
+        <h2>Achei PUCPR</h2>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="include.php?dir=paginas&file=login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="include.php?dir=paginas&file=cadastro">
+                    <i class="fas fa-user-plus"></i> Cadastro
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-tools"></i> Em produção
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>AQUI VAI SER A PÁGINA PRINCIPAL</h1>
+    </div>
+
+    <div class="profile">
+        <img src="https://via.placeholder.com/80" alt="Foto de perfil">
+        <h3>Nome do Usuário</h3>
+        <p>@usuario</p>
+        <button class="btn btn-primary">Editar Perfil</button>
+    </div>
 </body>
 </html>

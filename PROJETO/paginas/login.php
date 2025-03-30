@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <input type="text" class="form-control" id="nomeUsuario" name="nome_usuario" required>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="senha">Senha:</label>
                 <input type="password" class="form-control" id="senha" name="senha" required>
             </div>
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <a href="include.php?dir=paginas&file=update">Esqueci minha senha</a>
             </div>
 
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <button type="submit" class="btn btn-danger w-100">Entrar</button>
         </form>
     </div>
 </body>

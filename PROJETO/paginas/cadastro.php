@@ -55,7 +55,7 @@ if(isset($_POST['email'])) {
                             <label for="senha" class="form-label">Senha:</label>
                             <input type="password" class="form-control" name="senha" required placeholder="Crie sua senha">
                         </div>
-                        <button type="submit" class="btn btn-custom w-100">Enviar</button>
+                        <button type="submit" class="btn btn-danger w-100">Enviar</button>
                     </form>
                 </div>
             </div>
