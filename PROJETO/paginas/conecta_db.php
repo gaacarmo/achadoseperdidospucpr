@@ -6,7 +6,7 @@
 		function conecta_db() {
 			$host = "localhost"; // ou 127.0.0.1
 			$usuario = "root"; // usuário padrão do XAMPP
-			$senha = ""; // senha vazia no XAMPP
+			$senha = "root"; // senha vazia no XAMPP
 			$banco = "db_achei"; // Substitua pelo nome correto do seu banco
 		
 			$conn = new mysqli($host, $usuario, $senha, $banco);

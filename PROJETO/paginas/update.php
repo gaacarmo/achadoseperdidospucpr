@@ -1,5 +1,5 @@
 <?php
-require_once 'conecta_db.php';
+require_once 'paginas/conecta_db.php';
 //Inclui o arquivo com a função de conexão
 
 
@@ -55,7 +55,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         echo "<span class='alert alert-success'>
             <h5>Senha atualizada com sucesso! Redirecionando para a página de login...</h5>
             </span>";
-        header("Refresh: 3; url=login.php"); //Redireciona após 3 segundos
+        header("Refresh: 3; url=include.php?dir=paginas&file=login"); //Redireciona após 3 segundos
     } else {
         echo "<span class='alert alert-danger'>
             <h5>Erro ao atualizar a senha.</h5>

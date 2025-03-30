@@ -1,28 +1,28 @@
 <?php
-require_once 'conecta_db.php';
+require_once 'paginas/conecta_db.php';
 session_start();
 
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $obj = conecta_db();
 
-$obj = conecta_db();
+    $stmt = $obj->prepare("SELECT nome_usuario, senha FROM Usuario WHERE nome_usuario = ?");
+    $stmt->bind_param("s", $_POST['nome_usuario']);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
-// Corrigido o SQL
-$stmt = $obj->prepare("SELECT nome_usuario FROM Usuario WHERE nome_usuario = ?");
-$stmt->bind_param("s", $_POST['nome_usuario']);
-$stmt->execute();
-$resultado = $stmt->get_result();
+    if ($resultado->num_rows > 0) {
+        $user = $resultado->fetch_assoc();
 
-if ($resultado->num_rows > 0) {
-    $user = $resultado->fetch_assoc();
-
-    if ($_POST['senha'] == $user['senha']) {
-        $_SESSION['is_logged'] = true;
-        header("location: index.php");
-        exit;
+        if ($_POST['senha'] == $user['senha']) {
+            $_SESSION['is_logged'] = true;
+            header("Location: index.php");
+            exit;
+        } else {
+            echo "<div class='alert alert-danger'>Senha incorreta</div>";
+        }
     } else {
-        echo "<div class='alert alert-danger'>Senha incorreta</div>";
+        echo "<div class='alert alert-warning'>Nome de usuário não encontrado</div>";
     }
-} else {
-    echo "<div class='alert alert-warning'>Nome de usuário não encontrado</div>";
 }
 ?>
 
@@ -44,7 +44,7 @@ if ($resultado->num_rows > 0) {
 
         <form method="POST">
             <div class="form-group">
-                <label for="email">Nome de usuário:</label>
+                <label for="nomeUsuario">Nome de usuário:</label>
                 <input type="text" class="form-control" id="nomeUsuario" name="nome_usuario" required>
             </div>
 
@@ -53,8 +53,11 @@ if ($resultado->num_rows > 0) {
                 <input type="password" class="form-control" id="senha" name="senha" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <div>
+                <a href="include.php?dir=paginas&file=update">Esqueci minha senha</a>
+            </div>
 
+            <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
     </div>
 </body>

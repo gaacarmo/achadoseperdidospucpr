@@ -1,5 +1,5 @@
 <?php
-require_once 'conecta_db.php';
+require_once 'paginas/conecta_db.php';
 if(isset($_POST['email'])) {
     $obj = conecta_db();
     
@@ -10,13 +10,14 @@ if(isset($_POST['email'])) {
     $resultado = $stmt->execute();
     
     if($resultado) {
-        header("Location: index.php");
+        header("Location: ./include.php?dir=paginas&file=login");
         exit();
     } else {
         echo "<span class='alert alert-danger'><h5>Não funcionou!</h5></span>";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,38 +26,8 @@ if(isset($_POST['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
-        }
-        .form-container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-control {
-            background-color: #800020;
-            color: white;
-            border: none;
-        }
-        .form-control::placeholder {
-            color: #f8d7da;
-        }
-        .btn-custom {
-            background-color: black;
-            color: white;
-        }
-        .btn-custom:hover {
-            background-color: #666;
-            color: black;
-        }
-    </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
@@ -91,4 +62,5 @@ if(isset($_POST['email'])) {
         </div>
     </div>
 </body>
+
 </html>
