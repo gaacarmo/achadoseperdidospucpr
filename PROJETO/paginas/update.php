@@ -38,7 +38,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
             $usuario = $resultado_check->fetch_assoc();
             $senha_atual = $usuario['senha'];
 
-            // Verifica se a nova senha é igual à senha atual
+            // Verifica se a nova senha é igual à senha atual (agora comparação direta)
             if ($nova_senha === $senha_atual) {
                 $erro_nova_senha = "A nova senha não pode ser igual à senha atual.";
                 $validado = false;
@@ -46,18 +46,16 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         }
     }
 
-    // Se tudo estiver validado, atualiza a senha
+    // Se tudo estiver validado, atualiza a senha (sem criptografia)
     if ($validado) {
-        $query = "Update Usuario SET senha = ? WHERE email = ?";
-        // Prepara a consulta para evitar SQL Injection
-        $nova_senha = password_hash($nova_senha, PASSWORD_DEFAULT); // Criptografa a nova senha 
+        $query = "UPDATE Usuario SET senha = ? WHERE email = ?";
         $stmt = $obj->prepare($query);
         $stmt->bind_param("ss", $nova_senha, $email);
         $resultado = $stmt->execute();
 
         if ($resultado) {
             $sucesso = "Senha atualizada com sucesso! Redirecionando para a página de login...";
-            header("Refresh: 3; url=login.php");
+            header("Refresh: 3; url=include.php?dir=paginas&file=login");
         } else {
             $erro_geral = "Erro ao atualizar a senha.";
         }
@@ -144,4 +142,3 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
     </div>
 </body>
 </html>
-<?php   
