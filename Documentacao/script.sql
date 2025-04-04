@@ -20,7 +20,7 @@ create table Moderador(
 create table Postagem(
     postagem_id int PRIMARY KEY AUTO_INCREMENT,
     postagem_nome VARCHAR(100),
-    postagem_descricao(200),
+    postagem_descricao VARCHAR(200),
     postagem_local VARCHAR(50),
     postagem_cor VARCHAR(15),
     postagem_categoria VARCHAR(50),
