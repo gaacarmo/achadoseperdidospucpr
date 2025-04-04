@@ -28,7 +28,7 @@ create table Postagem(
     postagem_image VARCHAR(100),
     postagem_usuario_tipo VARCHAR(10),
     id_usuario INT,
-    FOREIGN KEY () REFERENCES ()
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(usuario_id)
     
 );
 

@@ -112,8 +112,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-tools"></i> Em produção
+                <a class="btn btn-danger w-100 publicar-btn" href="include.php?dir=paginas&file=publicar">
+                <i class="fas fa-feather-alt"></i> Publicar
                 </a>
             </li>
         </ul>
