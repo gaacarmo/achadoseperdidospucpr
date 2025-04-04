@@ -12,7 +12,7 @@ if (isset($_GET['Excluir'])) {
     $conexao->begin_transaction();
     $transacao_sucesso = true;
 
-    $excluirProdutosSQL = "DELETE FROM Usuario WHERE id = ?";
+    $excluirProdutosSQL = "DELETE FROM Usuario WHERE usuario_id = ?";
     $stmtProdutos = $conexao->prepare($excluirProdutosSQL);
     $stmtProdutos->bind_param("i", $_GET['Excluir']);
     if (!$stmtProdutos->execute()) {
@@ -35,9 +35,9 @@ if (isset($_GET['Excluir'])) {
 
 
 
-$sql = "SELECT Usuario.id, Usuario.nome, Usuario.nome_usuario, Usuario.email
+$sql = "SELECT Usuario.usuario_id, Usuario.nome, Usuario.nome_usuario, Usuario.email
         FROM Usuario
-        ORDER BY id";
+        ORDER BY usuario_id";
         
 $resultado = $conexao->query($sql);
 $registros = [];
@@ -63,12 +63,12 @@ if (count($registros) > 0) {
     
     foreach ($registros as $registro) {
         echo "<tr>
-                <td class='registros-tabela'>{$registro['id']}</td>
+                <td class='registros-tabela'>{$registro['usuario_id']}</td>
                 <td class='registros-tabela'>{$registro['nome']}</td>
                 <td class='registros-tabela'>{$registro['nome_usuario']}</td>
                 <td class='registros-tabela'>{$registro['email']}</td>
                 <td class='registros-tabela'>
-                    <a class='botao-excluir' name='Excluir' href='lista_usuarios.php?Excluir=" . $registro['id'] . "' //precisamos fazer o include
+                    <a class='botao-excluir' name='Excluir' href='lista_usuarios.php?Excluir=" . $registro['usuario_id'] . "' //precisamos fazer o include
             onclick='return confirm(\"Tem certeza que deseja excluir este usuário?\")'> 
             Excluir
         </a>
