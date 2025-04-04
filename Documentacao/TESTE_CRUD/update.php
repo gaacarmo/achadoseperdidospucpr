@@ -32,7 +32,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         $resultado_check = $stmt->get_result();
 
         if ($resultado_check->num_rows == 0) {
-            $erro_email = "Email não encontrado. Verifique o email digitado.";
+            $erro_email = "Email não encontrado."; // Verifica se o email existe 
             $validado = false;
         } else {
             $usuario = $resultado_check->fetch_assoc();
@@ -48,7 +48,9 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
 
     // Se tudo estiver validado, atualiza a senha
     if ($validado) {
-        $query = "UPDATE Usuario SET senha = ? WHERE email = ?";
+        $query = "Update Usuario SET senha = ? WHERE email = ?";
+        // Prepara a consulta para evitar SQL Injection
+        $nova_senha = password_hash($nova_senha, PASSWORD_DEFAULT); // Criptografa a nova senha 
         $stmt = $obj->prepare($query);
         $stmt->bind_param("ss", $nova_senha, $email);
         $resultado = $stmt->execute();
