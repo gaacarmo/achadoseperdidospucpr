@@ -96,6 +96,11 @@
     <div class="sidebar">
         <h2>Achei PUCPR</h2>
         <ul class="nav flex-column">
+        <li class="nav-item">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-sign-in-alt"></i> Home
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i> Login

@@ -1,5 +1,5 @@
 <?php
-require_once 'paginas/conecta_db.php';
+require_once 'conecta_db.php';
 //Inclui o arquivo com a função de conexão
 
 

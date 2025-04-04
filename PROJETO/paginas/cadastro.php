@@ -44,15 +44,15 @@ if(isset($_POST['email'])) {
                             <input type="text" class="form-control" name="nome_usuario" required placeholder="Digite seu nome de usuário">
                         </div>
                         <div class="mb-3">
-                            <label for="curso_usuario" class="form-label">Curso:</label>
-                            <input type="text" class="form-control" name="curso_usuario" required placeholder="Digite seu curso">
+                            <label for="curso_usuario" class="form-label">Curso</label>
+                            <input type=" class="form-control" name="curso_usuario" required placeholder="Digite seu curso">
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
+                            <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="email" required placeholder="Digite seu email">
                         </div>
                         <div class="mb-3">
-                            <label for="senha" class="form-label">Senha:</label>
+                            <label for="senha" class="form-label">Senha</label>
                             <input type="password" class="form-control" name="senha" required placeholder="Crie sua senha">
                         </div>
                         <button type="submit" class="btn btn-danger w-100">Enviar</button>
