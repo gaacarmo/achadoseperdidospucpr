@@ -9,10 +9,11 @@ create table Usuario(
     email VARCHAR(100),
     curso_usuario VARCHAR(50)
 );
-
+/*temos que alterar a tabela do moderador, colocar a foreign key do usuario -> usuario_id */
 create table Moderador(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome_usuario VARCHAR(20),
-    senha VARCHAR(15)
-  
+    senha VARCHAR(15),
+    usuario_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
