@@ -4,27 +4,57 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $obj = conecta_db();
-
-    $stmt = $obj->prepare("SELECT nome_usuario, senha FROM Usuario WHERE nome_usuario = ?");
-    $stmt->bind_param("s", $_POST['nome_usuario']);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    if ($resultado->num_rows > 0) {
-        $user = $resultado->fetch_assoc();
-
-        if ($_POST['senha'] == $user['senha']) {
-            $_SESSION['is_logged'] = true;
-            header("Location: index.php");
-            exit;
-        } else {
-            echo "<div class='alert alert-danger'>Senha incorreta</div>";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nome_usuario = $_POST['nome_usuario'];
+        $senha = $_POST['senha'];
+    
+        //  Primeiro ele tenta encontrar o usuário na tabela Moderador
+        $stmt2 = $obj->prepare("SELECT nome_usuario, senha FROM Moderador WHERE nome_usuario = ?");
+        $stmt2->bind_param("s", $nome_usuario);
+        $stmt2->execute();
+        $resultado2 = $stmt2->get_result();
+    
+        if ($resultado2 && $resultado2->num_rows > 0) {
+            $user = $resultado2->fetch_assoc();
+            if ($senha == $user['senha']) {
+                $_SESSION['is_logged'] = true;
+                $_SESSION['usuario'] = $user['nome_usuario'];
+                header("Location: index_adm.php");
+                exit;
+            } else {
+                echo "<div class='alert alert-danger'>Senha incorreta</div>";
+                exit;
+            }
         }
-    } else {
-        echo "<div class='alert alert-warning'>Nome de usuário não encontrado</div>";
+    
+        // caso nao seja moderador, tenta na tabela Usuario
+        $stmt = $obj->prepare("SELECT nome_usuario, senha FROM Usuario WHERE nome_usuario = ?");
+        $stmt->bind_param("s", $nome_usuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+    
+        if ($resultado && $resultado->num_rows > 0) {
+            $user = $resultado->fetch_assoc();
+            if ($senha == $user['senha']) {
+                $_SESSION['is_logged'] = true;
+                $_SESSION['usuario'] = $user['nome_usuario'];
+                header("Location: index.php");
+                exit;
+            } else {
+                echo "<div class='alert alert-danger'>Senha incorreta</div>";
+            }
+        } else {
+            echo "<div class='alert alert-warning'>Nome de usuário não encontrado</div>";
+        }
     }
 }
-?>
+    ?>
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
