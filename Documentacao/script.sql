@@ -9,3 +9,10 @@ create table Usuario(
     email VARCHAR(100),
     curso_usuario VARCHAR(50)
 );
+
+create table Moderador(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_usuario VARCHAR(20),
+    senha VARCHAR(15)
+  
+);
