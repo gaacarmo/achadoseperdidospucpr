@@ -45,8 +45,80 @@ if(isset($_POST['email'])) {
                         </div>
                         <div class="mb-3">
                             <label for="curso_usuario" class="form-label">Curso</label>
-                            <input type=" class="form-control" name="curso_usuario" required placeholder="Digite seu curso">
-                        </div>
+                            <select class="form-control" name="curso_usuario" required>
+                                <option value="" disabled selected>Selecione seu curso</option>
+                                <option>Administração</option>
+                                <option>Administração Internacional</option>
+                                <option>Agronomia</option>
+                                <option>Análise e Desenvolvimento de Sistemas</option>
+                                <option>Arquitetura e Urbanismo</option>
+                                <option>Artes Visuais - Multiartes</option>
+                                <option>Bacharelado Interdisciplinar em Negócios</option>
+                                <option>Big Data e Inteligência Analítica</option>
+                                <option>Biomedicina</option>
+                                <option>Ciência da Computação</option>
+                                <option>Ciência de Dados e Inteligência Artificial</option>
+                                <option>Ciências Biológicas</option>
+                                <option>Ciências Contábeis</option>
+                                <option>Computação Imersiva</option>
+                                <option>Design</option>
+                                <option>Direito</option>
+                                <option>Economia</option>
+                                <option>Economia da Influência Digital</option>
+                                <option>Enfermagem</option>
+                                <option>Engenharia Civil</option>
+                                <option>Engenharia de Controle e Automação</option>
+                                <option>Engenharia de Produção</option>
+                                <option>Engenharia de Software</option>
+                                <option>Engenharia Elétrica</option>
+                                <option>Engenharia Mecânica</option>
+                                <option>Engenharia Química</option>
+                                <option>Estética e Cosmética</option>
+                                <option>Experiência do Usuário – UX Design</option>
+                                <option>Farmácia</option>
+                                <option>Filosofia</option>
+                                <option>Física</option>
+                                <option>Fisioterapia</option>
+                                <option>Fonoaudiologia</option>
+                                <option>Gastronomia</option>
+                                <option>Gestão Comercial</option>
+                                <option>Gestão da Experiência do Cliente (Customer Experience)</option>
+                                <option>Gestão da Felicidade e Projeto de Vida</option>
+                                <option>Gestão de Marketing em Mídias Digitais</option>
+                                <option>Gestão de Recursos Humanos</option>
+                                <option>Gestão de Tecnologia da Informação (TI)</option>
+                                <option>Gestão Financeira</option>
+                                <option>Gestão Integrada de Agronegócios</option>
+                                <option>Gestão Internacional</option>
+                                <option>Gestão Pública</option>
+                                <option>Gestão Socioambiental e Governança (ESG)</option>
+                                <option>História - Bacharelado</option>
+                                <option>História - Licenciatura</option>
+                                <option>Inteligência Artificial Aplicada</option>
+                                <option>Inteligência Artificial: Sistemas de Dados Inteligentes</option>
+                                <option>Jornalismo</option>
+                                <option>Letras - Inglês</option>
+                                <option>Letras - Português</option>
+                                <option>Logística</option>
+                                <option>Marketing</option>
+                                <option>Matemática</option>
+                                <option>Medicina</option>
+                                <option>Medicina Veterinária</option>
+                                <option>Nutrição</option>
+                                <option>Odontologia</option>
+                                <option>Pedagogia</option>
+                                <option>Processos Gerenciais</option>
+                                <option>Psicologia</option>
+                                <option>Publicidade e Propaganda</option>
+                                <option>Química</option>
+                                <option>Relações Internacionais</option>
+                                <option>Saúde e Bem-estar Integral</option>
+                                <option>Serviço Social</option>
+                                <option>Sistemas de Informação</option>
+                                <option>Teatro - Multiartes</option>
+                                <option>Teologia</option>
+                                </select>
+                            </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="email" required placeholder="Digite seu email">
