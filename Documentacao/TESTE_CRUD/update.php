@@ -1,65 +1,56 @@
 <?php
 require_once 'conecta_db.php';
-//Inclui o arquivo com a função de conexão
 
+$erro = '';
+$sucesso = '';
 
-//Verifica se o formulário foi enviado
 if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_POST['email'])) {
     $email = $_POST['email'];
     $nova_senha = $_POST['nova_senha'];
     $confirmar_senha = $_POST['confirmar_senha'];
 
-    //Verifica se as senhas coincidem
+    // Verifica se as senhas coincidem
     if ($nova_senha !== $confirmar_senha) {
-        echo "<span class='alert alert-danger'>
-            <h5>As senhas digitadas não coincidem. Tente novamente.</h5>
-            </span>";
-        exit();
-    }
-
-    //Conecta ao banco de dados
-    $obj = conecta_db();
-
-    //Verifica se o email existe e recupera a senha atual
-    $query_check = "SELECT senha FROM Usuario WHERE email = '".$email."'";
-    $resultado_check = $obj->query($query_check);
-
-    if ($resultado_check->num_rows == 0) {
-        echo "<span class='alert alert-danger'>
-            <h5>Email não encontrado. Verifique o email digitado.</h5>
-            </span>";
-        exit();
-    }
-
-    $usuario = $resultado_check->fetch_assoc();
-    $senha_atual = $usuario['senha'];
-
-    //Verifica se a nova senha é igual à senha atual
-    if ($nova_senha === $senha_atual) {
-        echo "<span class='alert alert-danger'>
-            <h5>A nova senha não pode ser igual à senha atual.</h5>
-            </span>";
-        exit();
-    }
-
-    //Atualiza a senha no banco de dados
-    $query = "
-        UPDATE Usuario 
-        SET senha = '".$nova_senha."' 
-        WHERE email = '".$email."'
-    ";
-
-    $resultado = $obj->query($query);
-
-    if ($resultado) {
-        echo "<span class='alert alert-success'>
-            <h5>Senha atualizada com sucesso! Redirecionando para a página de login...</h5>
-            </span>";
-        header("Refresh: 3; url=login.php"); //Redireciona após 3 segundos
+        $erro = "As senhas digitadas não coincidem. Tente novamente.";
     } else {
-        echo "<span class='alert alert-danger'>
-            <h5>Erro ao atualizar a senha.</h5>
-            </span>";
+        // Conecta ao banco de dados
+        $obj = conecta_db();
+
+        // Verifica se o email existe e recupera a senha atual
+        $query_check = "SELECT senha FROM Usuario WHERE email = ?";
+        $stmt = $obj->prepare($query_check);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $resultado_check = $stmt->get_result();
+
+        if ($resultado_check->num_rows == 0) {
+            $erro = "Email não encontrado. Verifique o email digitado.";
+        } else {
+            $usuario = $resultado_check->fetch_assoc();
+            $senha_atual = $usuario['senha'];
+
+            // Verifica se a nova senha é igual à senha atual
+            if ($nova_senha === $senha_atual) {
+                $erro = "A nova senha não pode ser igual à senha atual.";
+            } else {
+                // Atualiza a senha no banco de dados
+                $query = "UPDATE Usuario SET senha = ? WHERE email = ?";
+                $stmt = $obj->prepare($query);
+                $stmt->bind_param("ss", $nova_senha, $email);
+                $resultado = $stmt->execute();
+
+                if ($resultado) {
+                    $sucesso = "Senha atualizada com sucesso! Redirecionando para a página de login...";
+                    echo "<script>
+                            setTimeout(function() {
+                                window.location.href = 'login.php';
+                            }, 3000);
+                          </script>";
+                } else {
+                    $erro = "Erro ao atualizar a senha.";
+                }
+            }
+        }
     }
 }
 ?>
@@ -74,15 +65,29 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         .alert {
             margin-top: 20px;
         }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Esqueceu sua senha</h2>
+        
+        <?php if ($erro): ?>
+            <div class="alert alert-danger"><?php echo $erro; ?></div>
+            <script>alert("<?php echo $erro; ?>");</script>
+        <?php endif; ?>
+        
+        <?php if ($sucesso): ?>
+            <div class="alert alert-success"><?php echo $sucesso; ?></div>
+        <?php endif; ?>
+        
         <form method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
             </div>
             <div class="form-group">
                 <label for="nova_senha">Nova Senha:</label>
