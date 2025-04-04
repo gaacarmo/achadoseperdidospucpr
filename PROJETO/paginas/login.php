@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $senha = $_POST['senha'];
     
         //  Primeiro ele tenta encontrar o usuário na tabela Moderador
-        $stmt2 = $obj->prepare("SELECT moderador_nome_usuario, moderador_senha FROM Moderador WHERE moderador_nome_usuario = ?");
+        $stmt2 = $obj->prepare("SELECT moderador_usuario_nome, moderador_senha FROM Moderador WHERE moderador_usuario_nome = ?");
         $stmt2->bind_param("s", $nome_usuario);
         $stmt2->execute();
         $resultado2 = $stmt2->get_result();
