@@ -38,6 +38,6 @@ create table Comentarios(
     comentario_conteudo VARCHAR(500),
     postagem_id INT,
     usuario_id INT, 
-    FOREIGN KEY (postagem_id) REFERENCES Postagem(postagem_categoria_id),
+    FOREIGN KEY (postagem_id) REFERENCES Postagem(postagem_id),
     FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
 );
