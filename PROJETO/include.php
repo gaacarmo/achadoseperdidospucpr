@@ -28,7 +28,7 @@ session_start();
             </li>
             <li class="nav-item">
                 <a class="btn btn-danger w-100 publicar-btn" href="include.php?dir=paginas&file=publicar">
-                <i class="fas fa-feather-alt"></i> <img src="assets/add.png" alt="Publicar">
+                <i class="fas fa-feather-alt"></i> <img src="assets/ChatGPT Image 11 de abr. de 2025, 11_01_02.png" alt="Publicar">
                 </a>
             </li>
 
