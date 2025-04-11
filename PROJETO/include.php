@@ -28,7 +28,7 @@ session_start();
             </li>
             <li class="nav-item">
                 <a class="btn btn-danger w-100 publicar-btn" href="include.php?dir=paginas&file=publicar">
-                <i class="fas fa-feather-alt"></i> Publicar
+                <i class="fas fa-feather-alt"></i> <img src="assets/add.png" alt="Publicar">
                 </a>
             </li>
 
@@ -78,7 +78,7 @@ session_start();
                 <a class='nav-link' href='include.php?dir=paginas&file=cadastro'>
                     <i class='fas fa-user-plus'></i> Cadastro
                 </a>
-            </li>;
+            </li>
         </div>";
     }
 ?>

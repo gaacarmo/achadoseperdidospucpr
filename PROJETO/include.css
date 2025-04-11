@@ -23,7 +23,9 @@ body {
 }
 
 .sidebar .nav-item {
+    border-radius: 100%;
     width: 100%;
+    
 }
 
 .sidebar .nav-link {
@@ -58,6 +60,7 @@ body {
 
 .content h1 {
     color: #7b0828;
+    border-radius: 100%;
 }
 
 .profile {
@@ -103,6 +106,7 @@ body {
     margin: 10px;
     background-color: #7b0828 !important;
     border-color: #7b0828 !important;
+    border-radius: 100%;
 }
 
 .publicar-btn:hover {
