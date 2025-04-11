@@ -58,6 +58,49 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <title>Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 100px;
+            max-width: 700px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            
+        }
+
+       
+
+        label {
+            color: #343a40;
+            font-weight: 500;
+        }
+
+        .btn-danger {
+            background-color: #7b0828;
+            border-color: #7b0828;
+        }
+
+        .btn-danger:hover {
+            background-color: #5a061f;
+            border-color: #5a061f;
+        }
+
+        a {
+            display: block;
+            text-align: right;
+           
+            color: #7b0828;
+        }
+
+        a:hover {
+            color: #5a061f;
+            text-decoration: underline;
+        }
+
         .alert {
             margin-top: 20px;
         }
@@ -65,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h2>Login</h2>
+        <h2 class="login">Login</h2>
 
         <form method="POST">
             <div class="form-group">

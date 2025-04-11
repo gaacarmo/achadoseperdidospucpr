@@ -21,11 +21,57 @@ if(isset($_POST['email'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Cadastro</title>
+<title>Cadastro</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            margin-top: 100px;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 900px;
+            }
+            h2 {
+            color: #7b0828; 
+            font-weight: 600;
+        }
+
+        .form-label {
+            color: #343a40; 
+            font-weight: 500;
+        }
+
+        .form-control:focus {
+            border-color: #7b0828;
+            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
+        }
+
+        .btn-danger {
+            background-color: #7b0828;
+            border-color: #7b0828;
+        }
+
+        .btn-danger:hover {
+            background-color: #5e061f;
+            border-color: #5e061f;
+        }
+
+        select.form-control {
+            background-color: #fff;
+        }
+    </style>
 </head>
 
 <body>

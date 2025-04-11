@@ -4,93 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AcheiNaPuc</title>
+    <link rel="stylesheet" href="include.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-        }
+    
+</style>
 
-        .sidebar {
-            width: 25%;
-            background-color: #ffffff;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .sidebar h2 {
-            font-size: 40px;
-            margin-bottom: 30px;
-            
-        }
-
-        .sidebar .nav-item {
-            width: 100%;
-        }
-
-        .sidebar .nav-link {
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-            color: black;
-            text-decoration: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 25px;
-            transition: background 0.2s;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #e8f5fe;
-        }
-
-        .sidebar .nav-link i {
-            margin-right: 15px;
-            font-size: 22px;
-        }
-
-        .content {
-            width: 50%;
-            padding: 20px;
-            text-align: center;
-            overflow-y: auto;
-        }
-
-        .profile {
-            width: 25%;
-            background-color: #ffffff;
-            border-left: 1px solid #ddd;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .profile img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-
-        .profile h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .profile p {
-            font-size: 14px;
-            color: gray;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="sidebar">
