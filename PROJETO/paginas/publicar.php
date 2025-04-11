@@ -1,17 +1,17 @@
 <?php
 require_once 'paginas/conecta_db.php';
 
-if(isset($_POST['postagem_nome'])) {
+if (isset($_POST['postagem_nome'])) {
     $obj = conecta_db();
-    // Upload da imagem
-    $imagem_nome = $_FILES['postagem_image']['name'];
-    $caminho_temp = $_FILES['postagem_image']['tmp_name'];
 
-    //a imagem vai ser enviada para a pasta uploads
-    $destino = 'uploads/' . $imagem_nome;
+    // Verifica se o arquivo foi enviado
+    $imagem_nome = null;
+    if (!empty($_FILES['postagem_image']['name'])) {
+        $imagem_nome = 'uploads/' . basename($_FILES['postagem_image']['name']);
+        $caminho_temp = $_FILES['postagem_image']['tmp_name'];
+        move_uploaded_file($caminho_temp, $imagem_nome);
+    }
 
-    move_uploaded_file($caminho_temp, $destino);
-    //comando sql
     $query = "INSERT INTO Postagem (
         postagem_nome,
         postagem_descricao,
@@ -39,15 +39,16 @@ if(isset($_POST['postagem_nome'])) {
 
     $resultado = $stmt->execute();
 
-    //se der tudo certo ele vai redirecionar para o index
-    if($resultado) {
+    if ($resultado) {
         header("Location:index.php");
         exit();
     } else {
         echo "<span class='alert alert-danger'><h5>Não funcionou!</h5></span>";
     }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -59,12 +60,10 @@ if(isset($_POST['postagem_nome'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <style>
         body {
             background-color: #f8f9fa;
         }
-
         .container {
             background-color: #ffffff;
             border: 1px solid #ccc;
@@ -73,34 +72,31 @@ if(isset($_POST['postagem_nome'])) {
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
             width: auto;
         }
-
         h2 {
-            color: #7b0828; /* Vinho PUCPR */
+            color: #7b0828;
             font-weight: 600;
         }
-
         .form-label {
-            color: #343a40; /* Cinza escuro */
+            color: #343a40;
             font-weight: 500;
         }
-
         .form-control:focus {
             border-color: #7b0828;
             box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
         }
-
         .btn-danger {
             background-color: #7b0828;
             border-color: #7b0828;
         }
-
         .btn-danger:hover {
             background-color: #5e061f;
             border-color: #5e061f;
         }
-
         select.form-control {
             background-color: #fff;
+        }
+        .alert {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -109,30 +105,32 @@ if(isset($_POST['postagem_nome'])) {
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h2 class="text-center mb-4">Cadastro de Achado ou Perdido</h2>
+                
+                <?php
+                if(isset($_SESSION['mensagem_erro'])) {
+                    echo '<div class="alert alert-danger">'.$_SESSION['mensagem_erro'].'</div>';
+                    unset($_SESSION['mensagem_erro']);
+                }
+                ?>
+                
                 <form action="" method="POST" enctype="multipart/form-data">
-                    
                     <!-- Dados da postagem -->
-                    <!-- titulo -->
                     <div class="mb-3">
                         <label for="postagem_nome" class="form-label">Título da Postagem:</label>
                         <input type="text" class="form-control" name="postagem_nome" required>
                     </div>
-                      <!-- Descrição -->
                     <div class="mb-3">
                         <label for="postagem_descricao" class="form-label">Descrição:</label>
                         <textarea class="form-control" name="postagem_descricao" rows="3" required></textarea>
                     </div>
-                      <!-- Local -->
                     <div class="mb-3">
                         <label for="postagem_local" class="form-label">Local onde foi encontrado/perdido:</label>
                         <input type="text" class="form-control" name="postagem_local" required>
                     </div>
-                    <!-- cor -->
                     <div class="mb-3">
                         <label for="postagem_cor" class="form-label">Cor do objeto:</label>
                         <input type="text" class="form-control" name="postagem_cor" required>
                     </div>
-                    <!-- Categoria -->
                     <div class="mb-3">
                         <label for="postagem_categoria" class="form-label">Categoria:</label>
                         <select class="form-control" name="postagem_categoria" required>
@@ -143,37 +141,31 @@ if(isset($_POST['postagem_nome'])) {
                             <option value="Outro">Outro</option>
                         </select>
                     </div>
-                    <!-- Data -->
                     <div class="mb-3">
                         <label for="postagem_data" class="form-label">Data em que foi encontrado/perdido:</label>
                         <input type="date" class="form-control" name="postagem_data" required>
                     </div>
-                    <!-- Imagem do objeto -->
                     <div class="mb-3">
                         <label for="postagem_image" class="form-label">Imagem do objeto:</label>
-                        <input type="file" class="form-control" name="postagem_image" accept="image/*" required>
+                        <input type="file" class="form-control" name="postagem_image" accept="image/*" >
+                        <small class="text-muted">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</small>
                     </div>
 
-                    <hr> <!-- Coloca uma linha na pagina -->
+                    <hr>
 
                     <div class="mb-3">
-                            <label for="postagem_usuario_tipo" class="form-label">Tipo da postagem</label>
-                            <select class="form-control" name="postagem_usuario_tipo" required>
-                                <option value="" disabled selected>Selecione o tipo da postagem</option>
-                                <option value="Perdi">Perdi</option>
-                                <option value="Achei">Achei</option>
-                            </select>
-                     </div>
+                        <label for="postagem_usuario_tipo" class="form-label">Tipo da postagem</label>
+                        <select class="form-control" name="postagem_usuario_tipo" required>
+                            <option value="" disabled selected>Selecione o tipo da postagem</option>
+                            <option value="Perdi">Perdi</option>
+                            <option value="Achei">Achei</option>
+                        </select>
+                    </div>
 
-
-                    
-
-                    
-                    <button type="" class="btn btn-danger w-100">Publicar</button>
+                    <button type="submit" class="btn btn-danger w-100">Publicar</button>
                 </form>
             </div>
         </div>
     </div>
 </body>
 </html>
-
