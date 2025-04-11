@@ -72,8 +72,7 @@ session_start();
                 <a class='nav-link' href='include.php?dir=paginas&file=login'>
                     <i class='fas fa-sign-in-alt'></i> Login
                 </a>
-            </li>
-            </div>";
+            </li>";
 
         echo "<li class='nav-item'>
                 <a class='nav-link' href='include.php?dir=paginas&file=cadastro'>

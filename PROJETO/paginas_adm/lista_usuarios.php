@@ -28,9 +28,6 @@ if (isset($_GET['Excluir'])) {
     }
 
     $conexao->autocommit(TRUE);
-
-        header("Location: index.php");
-        exit();
 }
 
 

@@ -41,9 +41,8 @@
     <div class="content">
         <h1>AQUI VAI SER A PÁGINA PRINCIPAL</h1>
         <?php
-            require_once "conecta_db.php";
 
-            
+
         ?>
     </div>
     <?php
