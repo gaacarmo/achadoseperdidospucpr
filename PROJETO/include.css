@@ -41,13 +41,21 @@ body {
     transition: background 0.2s;
 }
 
+
 .sidebar .nav-link:hover {
     background-color: #f2dcdc;
     color: black;
 }
 
+.sidebar .nav-link img {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 10px;
+    
+    
+}
+
 .sidebar .nav-link i {
-    margin-right: 15px;
     font-size: 22px;
 }
 
@@ -103,10 +111,17 @@ body {
 }
 
 .publicar-btn {
-    margin: 10px;
-    background-color: #7b0828 !important;
-    border-color: #7b0828 !important;
-    border-radius: 100%;
+    margin-top: 10px ;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #7b0828;
+    text-decoration: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 25px;
+    transition: background 0.2s;
+    margin-left: 30px;
 }
 
 .publicar-btn:hover {
@@ -121,4 +136,11 @@ label {
 .publicar-btn img {
     width: 30px;
     height: 30px;
+}
+
+.publicar-btn img{
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+        
 }

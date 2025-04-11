@@ -23,12 +23,12 @@ session_start();
         <ul class="nav flex-column">
         <li class="nav-item">
                 <a class="nav-link" href="index.php">
-                    <i class="fas fa-sign-in-alt"></i> Home
+                    <i class="fas fa-sign-in-alt"></i> <img src="assets/home.png" alt="home"> <h4>Home</h4>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-danger w-100 publicar-btn" href="include.php?dir=paginas&file=publicar">
-                    <img src="assets/add.png" alt="Publicar">
+                <i class="fas fa-feather-alt"></i> <img src="assets/add.png" alt="Publicar">
                 </a>
             </li>
 
