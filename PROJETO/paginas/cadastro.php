@@ -38,10 +38,10 @@ if(isset($_POST['email'])) {
         .container {
             background-color: #ffffff;
             border: 1px solid #ccc;
-            margin-top: 100px;
+            margin-top: 50px;
             padding: 2rem;
             border-radius: 15px;
-            width: 900px;
+            width: auto;
             }
             h2 {
             color: #7b0828; 

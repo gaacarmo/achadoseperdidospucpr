@@ -71,7 +71,7 @@ if(isset($_POST['postagem_nome'])) {
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
-            width: 900px;
+            width: auto;
         }
 
         h2 {
