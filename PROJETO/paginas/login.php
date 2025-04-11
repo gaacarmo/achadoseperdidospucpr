@@ -1,6 +1,5 @@
 <?php
 require_once 'paginas/conecta_db.php';
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $obj = conecta_db();
@@ -17,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($resultado2 && $resultado2->num_rows > 0) {
             $user = $resultado2->fetch_assoc();
             if ($senha == $user['moderador_senha']) {
-                $_SESSION['is_logged'] = true;
+                $_SESSION['is_logged_adm'] = true;
                 $_SESSION['moderador'] = $user['moderador_nome_usuario'];
                 header("Location: index_adm.php");
                 exit;
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($resultado && $resultado->num_rows > 0) {
             $user = $resultado->fetch_assoc();
             if ($senha == $user['senha']) {
-                $_SESSION['is_logged'] = true;
+                $_SESSION['is_logged_user'] = true;
                 $_SESSION['usuario'] = $user['nome_usuario'];
                 header("Location: index.php");
                 exit;

@@ -1,3 +1,7 @@
+<?php
+
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,16 +24,6 @@
         <li class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-sign-in-alt"></i> Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="include.php?dir=paginas&file=login">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="include.php?dir=paginas&file=cadastro">
-                    <i class="fas fa-user-plus"></i> Cadastro
                 </a>
             </li>
             <li class="nav-item">
@@ -63,11 +57,31 @@
         ?>
     </div>
 
-    <div class="profile">
-        <img src="https://via.placeholder.com/80" alt="Foto de perfil">
-        <h3>Nome do Usuário</h3>
-        <p>@usuario</p>
-        <button class="btn btn-primary">Editar Perfil</button>
-    </div>
+    <?php
+    if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true){
+        echo "<div class='profile'>";
+        echo "<img src='https://via.placeholder.com/80' alt='Foto de perfil'>";
+        echo "<h3>{$_SESSION['usuario']}</h3>";
+        echo "<p>@{$_SESSION['usuario']}</p>";
+        echo "<button class='btn btn-primary'><a href='#'>Editar Perfil</a></button>";
+        echo "<button class='btn btn-primary'><a href='include.php?dir=paginas&file=del_usu'>Sair</a></button>";
+        echo '</div>';
+    } else {
+        echo "<div class='profile'>
+            <li class='nav-item'>
+                <a class='nav-link' href='include.php?dir=paginas&file=login'>
+                    <i class='fas fa-sign-in-alt'></i> Login
+                </a>
+            </li>
+            </div>";
+
+        echo "<li class='nav-item'>
+                <a class='nav-link' href='include.php?dir=paginas&file=cadastro'>
+                    <i class='fas fa-user-plus'></i> Cadastro
+                </a>
+            </li>;
+        </div>";
+    }
+?>
 </body>
 </html>
