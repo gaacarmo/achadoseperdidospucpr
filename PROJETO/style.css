@@ -1,179 +1,187 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f8fa;
+    color: #0f1419;
+}
+
+/* SIDEBAR - 25% */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
+    width: 25%;
     height: 100vh;
-    width: 300px;
-    background-color: #7b0828;
+    background-color: #7b0828; /* Bordô PUCPR */
     padding: 30px 20px;
-    color: white;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: space-between;
+    color: white;
 }
 
-.sidebar h2 {
-    font-size: 32px;
-    margin-bottom: 30px;
-    font-weight: 700;
+.sidebar .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 40px;
     color: white;
+    
 }
 
 
 .sidebar .nav-item {
-    width: 100%;
+    margin-bottom: 16px;
 }
 
 .sidebar .nav-link {
     display: flex;
     align-items: center;
-    font-size: 18px;
     color: white;
+    font-size: 18px;
     text-decoration: none;
     padding: 12px 16px;
-    border-radius: 25px;
-    transition: background-color 0.2s ease;
-}
-
-.sidebar .nav-link:hover {
-    background-color: #a52834;
-    color: white;
-}
-
-.sidebar .nav-link i {
-    margin-right: 12px;
-    font-size: 20px;
-}
-
-.publicar-btn {
-    margin-top: 15px;
-    background-color: #fff !important;
-    color: #7b0828 !important;
-    font-weight: 600;
-    border-radius: 25px;
-    padding: 10px 20px;
+    border-radius: 30px;
     transition: background-color 0.3s ease;
 }
 
+.sidebar .nav-link i {
+    font-size: 22px;
+    margin-right: 12px;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #a52834; /* Tom mais claro de bordô */
+}
+.sidebar .nav-link img {
+    width: 25px;
+    height: auto;
+
+   margin: 0px 10px 0px 0px;
+    
+    
+}
+.publicar-btn {
+    background-color: white;
+    color: #7b0828;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
 .publicar-btn:hover {
-    background-color: #f2dcdc !important;
-    color: #7b0828 !important;
+    background-color: #f2dcdc;
 }
 
-
-.sidebar {
-    position: fixed;
-    height: 100%;
-    width: 400px;
-    background-color: #7b0828;
-    padding: 20px;
-    color: white;
-}
-
-.sidebar h2 {
-    color: white;
-    font-weight: 600;
-}
-
+/* FEED - 50% */
 .content {
-    margin-left: 600px;
-    width: 1000px;
-    padding: 20px;
-    background-color: grey;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    padding: 20px 30px;
 }
 
+/* POST */
 .post-container {
     background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
     padding: 15px;
+    margin-bottom: 20px;
     display: flex;
     gap: 15px;
-    align-items: flex-start;
 }
 
 .post-container img {
-    width: 200px;
-    height: 200px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     object-fit: cover;
-    border-radius: 10px;
 }
 
 .post-content {
     flex: 1;
-
 }
 
 .post-actions {
     margin-top: 10px;
     display: flex;
-    gap: 10px;
+    gap: 16px;
+    font-size: 14px;
+    color: #536471;
 }
 
 .post-actions button {
+    background: none;
     border: none;
-    background-color: #e9ecef;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 6px;
+    color: #536471;
 }
 
 .post-actions button:hover {
-    background-color: #d6d6d6;
+    color: #7b0828;
 }
 
-.publicar-btn {
-    margin-top: 0px;
-}
+/* PERFIL - 25% */
 .profile {
     position: fixed;
     top: 0;
     right: 0;
+    width: 25%;
     height: 100vh;
-    width: 300px;
     background-color: #ffffff;
     border-left: 1px solid #ddd;
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.05);
-    z-index: 1000;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
 }
 
 .profile img {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
 .profile h3 {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 5px;
-    color: #343a40;
+    color: #0f1419;
 }
 
 .profile p {
     font-size: 14px;
-    color: gray;
+    color: #657786;
     margin-bottom: 20px;
 }
 
 .profile .btn-primary {
     background-color: #7b0828;
-    border-color: #7b0828;
     color: white;
-    margin-bottom: 10px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 9999px;
+    font-weight: bold;
     width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .profile .btn-primary:hover {
     background-color: #5a061f;
-    border-color: #5a061f;
 }

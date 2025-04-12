@@ -87,14 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             background-color: #5a061f;
             border-color: #5a061f;
         }
-
+        a.left{
+            
+        }
         a {
             display: block;
-            text-align: right;
-           
+            text-align: center;
             color: #7b0828;
         }
-
+        
         a:hover {
             color: #5a061f;
             text-decoration: underline;
@@ -119,7 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <label for="senha">Senha:</label>
                 <input type="password" class="form-control" id="senha" name="senha" required>
             </div>
-
+            <div class="left">
+                <a href="include.php?dir=paginas&file=cadastro">Cadastre-se</a>
+            </div>
             <div>
                 <a href="include.php?dir=paginas&file=update">Esqueci minha senha</a>
             </div>

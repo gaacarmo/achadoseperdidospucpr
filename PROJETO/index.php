@@ -22,28 +22,23 @@ $resultado = $obj->query($query);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-    <style>
 
-</style>
 
 </head>
 <body>
 
 <div class="sidebar">
-    <h2>Achei PUCPR</h2>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link text-white" href="index.php">
-                <i class="fas fa-home"></i> Home
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="btn btn-light w-100 publicar-btn" href="include.php?dir=paginas&file=publicar">
-                <i class="fas fa-feather-alt"></i> Publicar
-            </a>
-        </li>
-    </ul>
+  <div>
+    <div class="title">Achei na PUCPR</div>
+    <div class="nav-item"><a class="nav-link" href="index.php"><i class="fa fa-home"></i><img src="assets/home.png" alt="home"> Início</a></div>
+    <div class="nav-item"><a class="nav-link" href="#"><i class="fa fa-search"></i> <img src="assets/user.png" alt="home">Perfil</a></div>
+    <div class="nav-item"><a class="nav-link" href="include.php?dir=paginas&file=login"><i class="fa fa-bell"></i><img src="assets/login.png" alt="home"> Login</a></div>
+    <div class="nav-item"><a class="nav-link" href="include.php?dir=paginas&file=publicar"><i class="fa fa-user"></i> <img src="assets/add.png" alt="Publicar">Publicar</a></div>
+  </div>
+  <button class="publicar-btn">Publicar</button>
 </div>
+
+
 
 <div class="content">
     <div class="container mt-4">
@@ -94,7 +89,7 @@ $resultado = $obj->query($query);
                 <a class='nav-link' href='include.php?dir=paginas&file=cadastro'>
                     <i class='fas fa-user-plus'></i> Cadastro
                 </a>
-            </li>;
+            </li>
         </div>";
     }
 ?>
