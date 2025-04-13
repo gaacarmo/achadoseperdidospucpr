@@ -1,53 +1,62 @@
 <?php
+ // ADICIONADO
 require_once 'paginas/conecta_db.php';
+//verifica se existe a sessao e depois verifica se esta logado
+if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
+    //verifica se exite alguma informação no nome da postagem
+    if (isset($_POST['postagem_nome'])) {
+        
+        $obj = conecta_db();
+        $imagem_nome = null;
+        if (!empty($_FILES['postagem_image']['name'])) {
+            $imagem_nome = 'uploads/' . basename($_FILES['postagem_image']['name']);
+            $caminho_temp = $_FILES['postagem_image']['tmp_name'];
+            move_uploaded_file($caminho_temp, $imagem_nome);
+        }
+        //comando sql
+        $query = "INSERT INTO Postagem (
+            postagem_nome,
+            postagem_descricao,
+            postagem_local,
+            postagem_cor,
+            postagem_categoria,
+            postagem_data,
+            postagem_image,
+            postagem_usuario_tipo
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-if (isset($_POST['postagem_nome'])) {
-    $obj = conecta_db();
+        $stmt = $obj->prepare($query);
+        $stmt->bind_param(
+            "ssssssss",
+            $_POST['postagem_nome'],
+            $_POST['postagem_descricao'],
+            $_POST['postagem_local'],
+            $_POST['postagem_cor'],
+            $_POST['postagem_categoria'],
+            $_POST['postagem_data'],
+            $imagem_nome,
+            $_POST['postagem_usuario_tipo']
+        );
 
-    // Verifica se o arquivo foi enviado
-    $imagem_nome = null;
-    if (!empty($_FILES['postagem_image']['name'])) {
-        $imagem_nome = 'uploads/' . basename($_FILES['postagem_image']['name']);
-        $caminho_temp = $_FILES['postagem_image']['tmp_name'];
-        move_uploaded_file($caminho_temp, $imagem_nome);
+        $resultado = $stmt->execute();
+
+        if ($resultado) {
+            //se der tudo certo
+            header("Location: index.php");
+            exit();
+            //se nao der
+        } else {
+            echo "<span class='alert alert-danger'><h5>Não funcionou!</h5></span>";
+        }
     }
-
-    $query = "INSERT INTO Postagem (
-        postagem_nome,
-        postagem_descricao,
-        postagem_local,
-        postagem_cor,
-        postagem_categoria,
-        postagem_data,
-        postagem_image,
-        postagem_usuario_tipo
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $obj->prepare($query);
-
-    $stmt->bind_param(
-        "ssssssss",
-        $_POST['postagem_nome'],
-        $_POST['postagem_descricao'],
-        $_POST['postagem_local'],
-        $_POST['postagem_cor'],
-        $_POST['postagem_categoria'],
-        $_POST['postagem_data'],
-        $imagem_nome,
-        $_POST['postagem_usuario_tipo']
-    );
-
-    $resultado = $stmt->execute();
-
-    if ($resultado) {
-        header("Location:index.php");
-        exit();
-    } else {
-        echo "<span class='alert alert-danger'><h5>Não funcionou!</h5></span>";
-    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // tentativa de envio sem estar logado
+    $_SESSION['mensagem_erro'] = "Você precisa estar logado para fazer uma publicação.";
+    header("Location: index.php"); 
+    exit();
 }
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -65,12 +74,11 @@ if (isset($_POST['postagem_nome'])) {
             background-color: #f8f9fa;
         }
         .container {
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            padding: 2rem;
+            
+            padding: 5rem;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-            width: auto;
+            
+            
         }
         h2 {
             color: #7b0828;
@@ -113,24 +121,33 @@ if (isset($_POST['postagem_nome'])) {
                 }
                 ?>
                 
+                <?php
+                //verifica novamente se esta logado ou nao
+                 if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
+                 
                 <form action="" method="POST" enctype="multipart/form-data">
                     <!-- Dados da postagem -->
+
                     <div class="mb-3">
                         <label for="postagem_nome" class="form-label">Título da Postagem:</label>
                         <input type="text" class="form-control" name="postagem_nome" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="postagem_descricao" class="form-label">Descrição:</label>
                         <textarea class="form-control" name="postagem_descricao" rows="3" required></textarea>
                     </div>
+
                     <div class="mb-3">
                         <label for="postagem_local" class="form-label">Local onde foi encontrado/perdido:</label>
                         <input type="text" class="form-control" name="postagem_local" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="postagem_cor" class="form-label">Cor do objeto:</label>
                         <input type="text" class="form-control" name="postagem_cor" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="postagem_categoria" class="form-label">Categoria:</label>
                         <select class="form-control" name="postagem_categoria" required>
@@ -141,10 +158,12 @@ if (isset($_POST['postagem_nome'])) {
                             <option value="Outro">Outro</option>
                         </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="postagem_data" class="form-label">Data em que foi encontrado/perdido:</label>
                         <input type="date" class="form-control" name="postagem_data" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="postagem_image" class="form-label">Imagem do objeto:</label>
                         <input type="file" class="form-control" name="postagem_image" accept="image/*" >
@@ -164,6 +183,14 @@ if (isset($_POST['postagem_nome'])) {
 
                     <button type="submit" class="btn btn-danger w-100">Publicar</button>
                 </form>
+                
+                 <!--caso o usuario tente acessar sem estar logado -->
+                <?php else: ?>
+                    <div class="alert text-center">
+                        <h5>Você precisa estar logado para publicar um item.</h5>
+                        <a href="include.php?dir=paginas&file=login" class="btn btn-outline-danger mt-3">Ir para Login</a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
