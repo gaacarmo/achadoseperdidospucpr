@@ -108,8 +108,8 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
                             <div class="form-group">
                                 <label for="email">Email:</label>
                                 <input type="email" class="form-control <?php echo $erro_email ? 'is-invalid' : ''; ?>" 
-                                       id="email" name="email" required 
-                                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                                    id="email" name="email" required 
+                                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                                 <?php if ($erro_email): ?>
                                     <div class="error-text"><?php echo $erro_email; ?></div>
                                 <?php endif; ?>
@@ -118,7 +118,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
                             <div class="form-group">
                                 <label for="nova_senha">Nova Senha:</label>
                                 <input type="password" class="form-control <?php echo $erro_nova_senha ? 'is-invalid' : ''; ?>" 
-                                       id="nova_senha" name="nova_senha" required>
+                                    id="nova_senha" name="nova_senha" required>
                                 <?php if ($erro_nova_senha): ?>
                                     <div class="error-text"><?php echo $erro_nova_senha; ?></div>
                                 <?php endif; ?>
@@ -127,7 +127,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
                             <div class="form-group">
                                 <label for="confirmar_senha">Confirmar Nova Senha:</label>
                                 <input type="password" class="form-control <?php echo $erro_confirmar_senha ? 'is-invalid' : ''; ?>" 
-                                       id="confirmar_senha" name="confirmar_senha" required>
+                                    id="confirmar_senha" name="confirmar_senha" required>
                                 <?php if ($erro_confirmar_senha): ?>
                                     <div class="error-text"><?php echo $erro_confirmar_senha; ?></div>
                                 <?php endif; ?>

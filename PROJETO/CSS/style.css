@@ -31,7 +31,9 @@ body {
     font-weight: bold;
     margin-bottom: 40px;
     color: white;
+    
 }
+
 
 .sidebar .nav-item {
     margin-bottom: 16px;
@@ -59,10 +61,7 @@ body {
 .sidebar .nav-link img {
     width: 25px;
     height: auto;
-    color: white;
-   margin: 0px 10px 0px 0px;
-    
-    
+    margin: 0px 10px 0px 0px;
 }
 .publicar-btn {
     background-color: white;
@@ -178,8 +177,10 @@ body {
     width: 100%;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    margin-bottom: 15px !important;
 }
 
 .profile .btn-primary:hover {
     background-color: #5a061f;
 }
+

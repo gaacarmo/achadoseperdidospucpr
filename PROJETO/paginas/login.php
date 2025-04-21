@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     
         // caso nao seja moderador, tenta na tabela Usuario
-        $stmt = $obj->prepare("SELECT nome_usuario, senha FROM Usuario WHERE nome_usuario = ?");
+        $stmt = $obj->prepare("SELECT nome_usuario, senha, usuario_id FROM Usuario WHERE nome_usuario = ?");
         $stmt->bind_param("s", $nome_usuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $user = $resultado->fetch_assoc();
             if ($senha == $user['senha']) {
                 $_SESSION['is_logged_user'] = true;
+                $_SESSION['id_usuario'] = $user['usuario_id'];
                 $_SESSION['usuario'] = $user['nome_usuario'];
                 header("Location: index.php");
                 exit;
@@ -55,56 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="./CSS/login.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            margin-top: 100px;
-            width: auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            
-        }
-
-       
-
-        label {
-            color: #343a40;
-            font-weight: 500;
-        }
-
-        .btn-danger {
-            background-color: #7b0828;
-            border-color: #7b0828;
-        }
-
-        .btn-danger:hover {
-            background-color: #5a061f;
-            border-color: #5a061f;
-        }
-        a.left{
-            
-        }
-        a {
-            display: block;
-            text-align: center;
-            color: #7b0828;
-        }
-        
-        a:hover {
-            color: #5a061f;
-            text-decoration: underline;
-        }
-
-        .alert {
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">

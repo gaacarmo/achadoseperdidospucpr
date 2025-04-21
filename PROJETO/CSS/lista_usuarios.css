@@ -1,0 +1,46 @@
+.titulo{
+    text-align: center;
+    font-weight: 1.2rem;
+}
+table.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3% 0px 0px 30px;
+}
+
+table.tabela th {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+table.tabela tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table.tabela tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+table.tabela td {
+    padding: 10px;
+    text-align: left;
+}
+
+.botao-excluir {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #FF4C4C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.botao-excluir:hover {
+    background-color: #FF1C1C;
+}
