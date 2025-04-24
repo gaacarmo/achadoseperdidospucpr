@@ -5,9 +5,10 @@ create table Usuario(
     usuario_id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     nome_usuario VARCHAR(20) NOT NULL UNIQUE,
-    senha VARCHAR(15) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    curso_usuario VARCHAR(50) NOT NULL
+    curso_usuario VARCHAR(50) NOT NULL,
+    foto_perfil VARCHAR(255) 
 );
 
 create table Moderador(
@@ -26,7 +27,7 @@ create table Postagem(
     postagem_categoria VARCHAR(50) NOT NULL,
     postagem_data DATE NOT NULL,
     postagem_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    postagem_image VARCHAR(100),
+    postagem_image VARCHAR(255),
     postagem_usuario_tipo VARCHAR(10) NOT NULL,
     id_usuario INT NOT NULL,
     id_admin INT,

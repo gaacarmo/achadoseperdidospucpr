@@ -81,6 +81,10 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         .form-group {
             margin-bottom: 1.5rem;
         }
+        .btn {
+            color: white;
+            background-color: #a52834;
+        }
     </style>
 </head>
 <body>
@@ -133,7 +137,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
                                 <?php endif; ?>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary btn-block">Atualizar Senha</button>
+                            <button type="submit" class="btn  btn-block">Atualizar Senha</button>
                         </form>
                     </div>
                 </div>

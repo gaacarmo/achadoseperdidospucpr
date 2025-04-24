@@ -27,7 +27,8 @@ body {
 }
 
 .sidebar .title {
-    font-size: 28px;
+    margin-left: 150px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 40px;
     color: white;
@@ -35,13 +36,14 @@ body {
 
 .sidebar .nav-item {
     margin-bottom: 16px;
+    margin-left: 150px;
 }
 
 .sidebar .nav-link {
     display: flex;
     align-items: center;
     color: white;
-    font-size: 18px;
+    font-size: 25px;
     text-decoration: none;
     padding: 12px 16px;
     border-radius: 30px;
@@ -183,4 +185,35 @@ body {
 
 .profile .btn-primary:hover {
     background-color: #5a061f;
+}
+.side-help-box {
+    position: fixed;
+    top: 80px;
+    width: 400px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    font-size: 27px; 
+    z-index: 999;
+}
+.back-button {
+    position: fixed;
+    top: 15px;
+    color: white;
+    background-color: #5a061f;
+    
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background-color: #f0f0f0;
+    color: black;
 }

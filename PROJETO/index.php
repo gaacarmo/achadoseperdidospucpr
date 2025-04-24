@@ -73,6 +73,7 @@ $resultado = $obj->query($query);
 </div>
 
 <?php
+//se estiver logado ira aparecer a opcao de editar perfil
     if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true){
         echo "<div class='profile'>";
         echo "<img src='https://via.placeholder.com/80' alt='Foto de perfil'>";
@@ -82,20 +83,22 @@ $resultado = $obj->query($query);
         echo "<button class='btn btn-primary' onclick=\"window.location.href='include.php?dir=paginas&file=del_usu'\">Sair</button>";
         echo '</div>';
     } else {
+        //caso nao esteja, mostrara na tela o guia de como usar o achei na puc
         echo "<div class='profile'>
-            <li class='nav-item'>
-                <a class='nav-link' href='include.php?dir=paginas&file=login'>
-                    <i class='fas fa-sign-in-alt'></i> Login
-                </a>
-            </li>
+            <div class='side-help-box'>
+                <h5><i class='fas fa-question-circle'></i> Como usar o Achei na PUCPR?</h5>
+                <ol class='small mt-3'>
+                    <li>🔍 <strong>Pesquise</strong> se o item já foi publicado.</li>
+                    <li>📝 <strong>Publique</strong> um novo item se não encontrar.</li>
+                    <li>📍 Informe <strong>local, data e descrição</strong> do item.</li>
+                    <li>🖼️ Adicione uma <strong>foto</strong> se quiser, para ajudar na identificação.</li>
+                    <li>💬 Use os <strong>comentários</strong> para combinar devolução.</li>
+                </ol>
+</div>
             </div>";
 
-        echo "<li class='nav-item'>
-                <a class='nav-link' href='include.php?dir=paginas&file=cadastro'>
-                    <i class='fas fa-user-plus'></i> Cadastro
-                </a>
-            </li>
-        </div>";
+        
+        
     }
 ?>
 

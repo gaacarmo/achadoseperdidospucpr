@@ -18,6 +18,8 @@ session_start();
 
 </head>
 <body>
+
+
 <div class="sidebar">
     <div>
         <div class="title">Achei na PUCPR</div>
@@ -30,7 +32,11 @@ session_start();
 </div>
 
     <div class="content">
+    <button onclick="window.history.back()" class="back-button">
+        ← Voltar
+    </button>
         <?php
+        
             // Verifica se os parâmetros estão presentes
             if (isset($_GET['dir']) && isset($_GET['file']) && !empty($_GET['dir']) && !empty($_GET['file'])) {
                 $dir = basename($_GET['dir']); // Evita diretórios externos
@@ -62,18 +68,20 @@ session_start();
         echo '</div>';
     } else {
         echo "<div class='profile'>
-            <li class='nav-item'>
-                <a class='nav-link' href='include.php?dir=paginas&file=login'>
-                    <i class='fas fa-sign-in-alt'></i> Login
-                </a>
+            
+                 <div class='side-help-box'>
+                <h5><i class='fas fa-question-circle'></i> Como usar o Achei na PUCPR?</h5>
+                <ol class='small mt-3'>
+                    <li>🔍 <strong>Pesquise</strong> se o item já foi publicado.</li>
+                    <li>📝 <strong>Publique</strong> um novo item se não encontrar.</li>
+                    <li>📍 Informe <strong>local, data e descrição</strong> do item.</li>
+                    <li>🖼️ Adicione uma <strong>foto</strong> se quiser, para ajudar na identificação.</li>
+                    <li>💬 Use os <strong>comentários</strong> para combinar devolução.</li>
+                </ol>
+        </div>
             </li>";
 
-        echo "<li class='nav-item'>
-                <a class='nav-link' href='include.php?dir=paginas&file=cadastro'>
-                    <i class='fas fa-user-plus'></i> Cadastro
-                </a>
-            </li>
-        </div>";
+        
     }
 ?>
 </body>

@@ -59,6 +59,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="./CSS/login.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
+<style>
+    .side-help-box {
+    position: fixed;
+    top: 80px;
+    
+    width: 400px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    font-size: 30px; 
+  
+    z-index: 999;
+}
+</style>
 <body>
     <div class="container">
         <h2 class="login">Login</h2>
