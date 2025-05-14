@@ -1,4 +1,5 @@
 <?php
+
 require_once 'paginas/conecta_db.php';  
 //verifica se existe a sessao e depois verifica se esta logado
 if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
@@ -24,7 +25,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
             postagem_usuario_tipo,
             id_usuario
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+      
         $stmt = $obj->prepare($query);
         $stmt->bind_param(
             "ssssssssi",
@@ -36,7 +37,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
             $_POST['postagem_data'],
             $imagem_nome,
             $_POST['postagem_usuario_tipo'],
-            $_SESSION['id_usuario']
+            $_SESSION['usuario_id']
         );
 
         $resultado = $stmt->execute();

@@ -1,23 +1,28 @@
 <?php
 require_once 'paginas/conecta_db.php';
 
+// Inicia a sessão (caso ainda não esteja iniciada)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $obj = conecta_db();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nome_usuario = $_POST['nome_usuario'];
         $senha = $_POST['senha'];
-    
+
         //  Primeiro ele tenta encontrar o usuário na tabela Moderador
         $stmt2 = $obj->prepare("SELECT moderador_usuario_nome, moderador_senha FROM Moderador WHERE moderador_usuario_nome = ?");
         $stmt2->bind_param("s", $nome_usuario);
         $stmt2->execute();
         $resultado2 = $stmt2->get_result();
-    
+
         if ($resultado2 && $resultado2->num_rows > 0) {
             $user = $resultado2->fetch_assoc();
             if ($senha == $user['moderador_senha']) {
                 $_SESSION['is_logged_adm'] = true;
-                $_SESSION['moderador'] = $user['moderador_nome_usuario'];
+                $_SESSION['moderador'] = $user['moderador_usuario_nome'];
                 header("Location: index_adm.php");
                 exit;
             } else {
@@ -25,18 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 exit;
             }
         }
-    
+
         // caso nao seja moderador, tenta na tabela Usuario
         $stmt = $obj->prepare("SELECT nome_usuario, senha, usuario_id FROM Usuario WHERE nome_usuario = ?");
         $stmt->bind_param("s", $nome_usuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
-    
+
         if ($resultado && $resultado->num_rows > 0) {
             $user = $resultado->fetch_assoc();
             if ($senha == $user['senha']) {
                 $_SESSION['is_logged_user'] = true;
-                $_SESSION['id_usuario'] = $user['usuario_id'];
+                $_SESSION['usuario_id'] = $user['usuario_id']; // Armazena o ID do usuário na sessão
                 $_SESSION['usuario'] = $user['nome_usuario'];
                 header("Location: index.php");
                 exit;
@@ -48,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     }
 }
-    ?>
-
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -65,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     top: 80px;
     
     width: 400px;
-    background-color: #f8f9fa;
+
     border: 1px solid #dee2e6;
     border-radius: 12px;
     padding: 30px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+ 
     font-size: 30px; 
   
     z-index: 999;
