@@ -7,7 +7,6 @@ $query = "SELECT p.*, u.nome_usuario
         FROM Postagem p 
         LEFT JOIN Usuario u ON p.id_usuario = u.usuario_id 
         ORDER BY p.postagem_id DESC";
-$sql_select = "SELECT nome, nome_usuario FROM Usuario WHERE usuario_id = ?";
 $resultado = $obj->query($query);
 
 ?>
