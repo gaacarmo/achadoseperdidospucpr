@@ -1,53 +1,63 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #333;
     margin: 0;
-    padding: 20px;
+    padding: clamp(15px, 3vw, 30px);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-color: #f8f9fa;
 }
 
 .form-container {
     background-color: #ffffff;
-    padding: 30px 40px;
+    padding: clamp(20px, 3vw, 40px);
     border-radius: 8px;
-    width: 100%;
- 
-    
+    width: min(95%, 600px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    color: #333;
+    color: #7b0828;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: clamp(20px, 3vw, 30px);
     font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: clamp(15px, 2vw, 20px);
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: clamp(5px, 1vw, 8px);
     font-weight: 500;
-    color: #555;
+    color: #343a40;
+    font-size: clamp(14px, 1.5vw, 16px);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
     width: 100%;
-    padding: 12px;
+    padding: clamp(8px, 1.5vw, 12px);
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: clamp(14px, 1.5vw, 16px);
     color: #333;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
     border-color: #7b0828;
     outline: none;
     box-shadow: 0 0 0 2px rgba(123, 8, 40, 0.2);
@@ -56,57 +66,60 @@ input[type="text"]:focus {
 button[type="submit"] {
     background-color: #7b0828;
     color: white;
-    padding: 12px 20px;
+    padding: clamp(8px, 1.5vw, 12px) clamp(16px, 2vw, 24px);
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: clamp(14px, 1.5vw, 16px);
     font-weight: 500;
     width: 100%;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    max-width: 300px;
+    margin: clamp(20px, 3vw, 30px) auto;
+    display: block;
+    transition: all 0.3s ease;
 }
 
 button[type="submit"]:hover {
     background-color: #5e061f;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
+.alert {
+    margin-top: clamp(15px, 2vw, 20px);
+    font-size: clamp(14px, 1.5vw, 16px);
+    padding: clamp(10px, 1.5vw, 15px);
+}
 
+@media (max-width: 768px) {
     .form-container {
         padding: 20px;
+        width: 100%;
     }
-
-    h2 {
-        font-size: 1.5rem;
+    
+    .row {
+        flex-direction: column;
     }
-
-    input[type="text"] {
-        font-size: 0.9rem;
-    }
-
-    button[type="submit"] {
-        font-size: 0.9rem;
-        padding: 10px 15px;
+    
+    .col-md-6 {
+        width: 100%;
+        margin-bottom: 15px;
     }
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .form-container {
+        padding: 15px;
+    }
+    
     h2 {
-        font-size: 1.2rem;
+        font-size: 20px;
     }
-
-    input[type="text"] {
-        font-size: 0.8rem;
-    }
-
+    
     button[type="submit"] {
-        font-size: 0.8rem;
-        padding: 8px 10px;
+        width: 100%;
     }
 }
         

@@ -1,23 +1,40 @@
 body {
     background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(15px, 3vw, 30px);
 }
 
 .container {
     background-color: #ffffff;
     border: 1px solid #ccc;
-    margin-top: 50px;
-    padding: 2rem;
+    padding: clamp(20px, 3vw, 2rem);
     border-radius: 15px;
-    width: auto;
-    }
-    h2 {
-    color: #7b0828; 
+    width: min(95%, 800px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #7b0828;
     font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    margin-bottom: clamp(20px, 3vw, 30px);
+    text-align: center;
 }
 
 .form-label {
-    color: #343a40; 
+    color: #343a40;
     font-weight: 500;
+    font-size: clamp(14px, 1.5vw, 16px);
+    margin-bottom: clamp(5px, 1vw, 8px);
+}
+
+.form-control {
+    font-size: clamp(14px, 1.5vw, 16px);
+    padding: clamp(8px, 1.5vw, 12px);
+    margin-bottom: clamp(15px, 2vw, 20px);
 }
 
 .form-control:focus {
@@ -28,6 +45,12 @@ body {
 .btn-danger {
     background-color: #7b0828;
     border-color: #7b0828;
+    font-size: clamp(14px, 1.5vw, 16px);
+    padding: clamp(8px, 1.5vw, 12px) clamp(16px, 2vw, 24px);
+    width: 100%;
+    max-width: 300px;
+    margin: clamp(20px, 3vw, 30px) auto;
+    display: block;
 }
 
 .btn-danger:hover {
@@ -37,4 +60,47 @@ body {
 
 select.form-control {
     background-color: #fff;
+    cursor: pointer;
+}
+
+.row {
+    margin: 0 -10px;
+}
+
+.col-md-6 {
+    padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .col-md-6 {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    .btn-danger {
+        width: 100%;
+    }
 }
