@@ -59,9 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="./CSS/login.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AcheiNaPuc</title>
+    <link rel="stylesheet" href="../CSS/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <style>
     .side-help-box {
@@ -81,27 +84,55 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </style>
 <body>
     <div class="container">
-        <h2 class="login">Login</h2>
+        <h2 class="text-center mb-4">Login</h2>
 
-        <form method="POST">
+        <form method="POST" class="needs-validation" novalidate>
             <div class="form-group">
                 <label for="nomeUsuario">Nome de usuário:</label>
-                <input type="text" class="form-control" id="nomeUsuario" name="nome_usuario" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="nomeUsuario" name="nome_usuario" required>
+                </div>
             </div>
 
             <div class="form-group mb-3">
                 <label for="senha">Senha:</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
-            </div>
-            <div class="left">
-                <a href="include.php?dir=paginas&file=cadastro">Cadastre-se</a>
-            </div>
-            <div>
-                <a href="include.php?dir=paginas&file=update">Esqueci minha senha</a>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="senha" name="senha" required>
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-danger w-100">Entrar</button>
+            <div class="d-flex flex-column gap-2 mb-3">
+                <a href="include.php?dir=paginas&file=cadastro" class="text-decoration-none">
+                    <i class="fas fa-user-plus"></i> Cadastre-se
+                </a>
+                <a href="include.php?dir=paginas&file=update" class="text-decoration-none">
+                    <i class="fas fa-key"></i> Esqueci minha senha
+                </a>
+            </div>
+
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
         </form>
     </div>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
 </body>
 </html>
