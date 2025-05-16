@@ -1,5 +1,5 @@
 <?php
-require_once 'paginas/conecta_db.php';
+require_once __DIR__ . '/conecta_db.php';
 
 // Inicia a sessão (caso ainda não esteja iniciada)
 if (session_status() === PHP_SESSION_NONE) {
@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Verifica se o usuário está logado e se o usuario_id está definido na sessão
 if (!isset($_SESSION['is_logged_user']) || $_SESSION['is_logged_user'] !== true || !isset($_SESSION['usuario_id'])) {
     // Redireciona para a página de login e exibe uma mensagem de erro
-    header("Location: include.php?dir=paginas&file=login");
+    header("Location: /AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php");
     exit();
 }
 
@@ -19,34 +19,68 @@ $usuario_id = $_SESSION['usuario_id'];
 // Conecta ao banco de dados
 $conexao = conecta_db();
 
+$success_message = '';
+$error_message = '';
+
 // Atualiza os dados se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Filtra e obtém os dados do formulário para evitar SQL injection
-    $foto = filter_input(INPUT_POST, 'foto_perfil', FILTER_SANITIZE_URL);
     $nomeCompleto = filter_input(INPUT_POST, 'nome_completo', FILTER_SANITIZE_STRING);
     $nome_usuario = filter_input(INPUT_POST, 'nome_usuario', FILTER_SANITIZE_STRING);
-    $curso = filter_input(INPUT_POST, 'curso', FILTER_SANITIZE_STRING);
-
-    // Prepara a consulta SQL para atualização
-    $sql_update = "UPDATE Usuario SET
-                    foto_perfil = ?,
-                    nome = ?,
-                    nome_usuario = ?
-                    WHERE usuario_id = ?";
-    $stmt = $conexao->prepare($sql_update);
-
-    // Vincula os parâmetros de forma segura
-    $stmt->bind_param("sssi", $foto, $nomeCompleto, $nome_usuario, $usuario_id);
-
-    // Executa a consulta
-    if ($stmt->execute()) {
-        echo "<p style='color: green;'>Dados atualizados com sucesso!</p>";
-    } else {
-        echo "<p style='color: red;'>Erro ao atualizar: " . $conexao->error . "</p>";
+    
+    // Handle file upload
+    $foto = $usuario['foto_perfil']; // Keep existing photo by default
+    if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = __DIR__ . '/../uploads/';
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        
+        $file_extension = strtolower(pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION));
+        $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+        
+        if (in_array($file_extension, $allowed_extensions)) {
+            if ($_FILES['foto_perfil']['size'] <= 2 * 1024 * 1024) { // 2MB limit
+                $new_filename = uniqid('profile_') . '.' . $file_extension;
+                $upload_path = $upload_dir . $new_filename;
+                
+                if (move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $upload_path)) {
+                    $foto = '/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/uploads/' . $new_filename;
+                } else {
+                    $error_message = "Erro ao fazer upload da imagem.";
+                }
+            } else {
+                $error_message = "A imagem deve ter no máximo 2MB.";
+            }
+        } else {
+            $error_message = "Formato de arquivo não permitido. Use JPG, PNG ou GIF.";
+        }
     }
 
-    // Fecha a declaração
-    $stmt->close();
+    if (empty($error_message)) {
+        // Prepara a consulta SQL para atualização
+        $sql_update = "UPDATE Usuario SET
+                        foto_perfil = ?,
+                        nome = ?,
+                        nome_usuario = ?
+                        WHERE usuario_id = ?";
+        $stmt = $conexao->prepare($sql_update);
+
+        // Vincula os parâmetros de forma segura
+        $stmt->bind_param("sssi", $foto, $nomeCompleto, $nome_usuario, $usuario_id);
+
+        // Executa a consulta
+        if ($stmt->execute()) {
+            $success_message = "Dados atualizados com sucesso!";
+            // Update session username if it was changed
+            $_SESSION['usuario'] = $nome_usuario;
+        } else {
+            $error_message = "Erro ao atualizar: " . $conexao->error;
+        }
+
+        // Fecha a declaração
+        $stmt->close();
+    }
 }
 
 // Busca os dados do usuário para preencher o formulário
@@ -82,6 +116,54 @@ $conexao->close();
             background-color: #f5f8fa;
             color: #0f1419;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background-color: white;
+            padding: 1.5rem;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        .sidebar .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #7b0828;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f5f8fa;
+        }
+        .nav-item {
+            margin-bottom: 1rem;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            color: #0f1419;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+        .nav-link:hover {
+            background-color: #f5f8fa;
+            color: #7b0828;
+        }
+        .nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+        }
+        .content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
         }
         .form-container {
             background-color: white;
@@ -141,6 +223,16 @@ $conexao->close();
             .mobile-menu-toggle {
                 display: block;
             }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
             .form-container {
                 margin: 1rem;
                 padding: 1rem;
@@ -157,84 +249,114 @@ $conexao->close();
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="form-container">
-                    <h2 class="text-center mb-4">
-                        <i class="fas fa-user-edit"></i> Editar Perfil
-                    </h2>
+    <div class="sidebar" id="sidebar">
+        <div class="title">
+            <i class="fas fa-search"></i> AcheiNaPuc
+        </div>
+        <nav>
+            <div class="nav-item">
+                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php" class="nav-link">
+                    <i class="fas fa-home"></i> Início
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/paginas/publicar.php" class="nav-link">
+                    <i class="fas fa-plus-circle"></i> Publicar
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/paginas/editar.php" class="nav-link">
+                    <i class="fas fa-user-edit"></i> Editar Perfil
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/paginas/del_usu.php" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </div>
+        </nav>
+    </div>
 
-                    <?php if (isset($success_message)): ?>
-                        <div class="alert alert-success">
-                            <i class="fas fa-check-circle"></i> <?php echo $success_message; ?>
-                        </div>
-                    <?php endif; ?>
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="form-container">
+                        <h2 class="text-center mb-4">
+                            <i class="fas fa-user-edit"></i> Editar Perfil
+                        </h2>
 
-                    <?php if (isset($error_message)): ?>
-                        <div class="alert alert-danger">
-                            <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
-                        </div>
-                    <?php endif; ?>
+                        <?php if (isset($success_message)): ?>
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i> <?php echo $success_message; ?>
+                            </div>
+                        <?php endif; ?>
 
-                    <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
-                        <div class="text-center mb-4">
-                            <img src="<?php echo htmlspecialchars($usuario['foto_perfil'] ?? '../assets/default-avatar.png'); ?>" 
-                                 alt="Foto de perfil" 
-                                 class="profile-image-preview" 
-                                 id="profile-preview">
-                        </div>
+                        <?php if (isset($error_message)): ?>
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+                            </div>
+                        <?php endif; ?>
 
-                        <div class="mb-3">
-                            <label for="foto_perfil" class="form-label">
-                                <i class="fas fa-camera"></i> Foto de Perfil
-                            </label>
-                            <input type="file" 
-                                   class="form-control" 
-                                   id="foto_perfil" 
-                                   name="foto_perfil" 
-                                   accept="image/*"
-                                   onchange="previewImage(this)">
-                            <div class="form-text">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</div>
-                        </div>
+                        <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+                            <div class="text-center mb-4">
+                                <img src="<?php echo htmlspecialchars($usuario['foto_perfil'] ?? '../assets/default-avatar.png'); ?>" 
+                                     alt="Foto de perfil" 
+                                     class="profile-image-preview" 
+                                     id="profile-preview">
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="nome_completo" class="form-label">
-                                <i class="fas fa-user"></i> Nome Completo
-                            </label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="nome_completo" 
-                                   name="nome_completo" 
-                                   value="<?php echo htmlspecialchars($usuario['nome'] ?? ''); ?>" 
-                                   required
-                                   placeholder="Digite seu nome completo">
-                            <div class="invalid-feedback">Por favor, digite seu nome completo.</div>
-                        </div>
+                            <div class="mb-3">
+                                <label for="foto_perfil" class="form-label">
+                                    <i class="fas fa-camera"></i> Foto de Perfil
+                                </label>
+                                <input type="file" 
+                                       class="form-control" 
+                                       id="foto_perfil" 
+                                       name="foto_perfil" 
+                                       accept="image/*"
+                                       onchange="previewImage(this)">
+                                <div class="form-text">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</div>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="nome_usuario" class="form-label">
-                                <i class="fas fa-at"></i> Nome de Usuário
-                            </label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="nome_usuario" 
-                                   name="nome_usuario" 
-                                   value="<?php echo htmlspecialchars($usuario['nome_usuario'] ?? ''); ?>" 
-                                   required
-                                   placeholder="Digite seu nome de usuário">
-                            <div class="invalid-feedback">Por favor, digite seu nome de usuário.</div>
-                        </div>
+                            <div class="mb-3">
+                                <label for="nome_completo" class="form-label">
+                                    <i class="fas fa-user"></i> Nome Completo
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="nome_completo" 
+                                       name="nome_completo" 
+                                       value="<?php echo htmlspecialchars($usuario['nome'] ?? ''); ?>" 
+                                       required
+                                       placeholder="Digite seu nome completo">
+                                <div class="invalid-feedback">Por favor, digite seu nome completo.</div>
+                            </div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-save"></i> Salvar Alterações
-                            </button>
-                            <a href="index.php" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left"></i> Voltar
-                            </a>
-                        </div>
-                    </form>
+                            <div class="mb-4">
+                                <label for="nome_usuario" class="form-label">
+                                    <i class="fas fa-at"></i> Nome de Usuário
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="nome_usuario" 
+                                       name="nome_usuario" 
+                                       value="<?php echo htmlspecialchars($usuario['nome_usuario'] ?? ''); ?>" 
+                                       required
+                                       placeholder="Digite seu nome de usuário">
+                                <div class="invalid-feedback">Por favor, digite seu nome de usuário.</div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-save"></i> Salvar Alterações
+                                </button>
+                                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -256,24 +378,38 @@ $conexao->close();
             })
         })()
 
-        // Image preview
+        // Image preview functionality
         function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profile-preview').src = e.target.result;
+            const preview = document.getElementById('profile-preview');
+            const file = input.files[0];
+            
+            if (file) {
+                // Check file size (2MB limit)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('A imagem deve ter no máximo 2MB.');
+                    input.value = '';
+                    return;
                 }
-                reader.readAsDataURL(input.files[0]);
+                
+                // Check file type
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Formato de arquivo não permitido. Use JPG, PNG ou GIF.');
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
             }
         }
 
         // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            
-            mobileMenuToggle.addEventListener('click', function() {
-                // Add your mobile menu toggle logic here if needed
-            });
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
         });
     </script>
 </body>
