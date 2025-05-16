@@ -27,6 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome_usuario = filter_input(INPUT_POST, 'nome_usuario', FILTER_SANITIZE_STRING);
     $curso = filter_input(INPUT_POST, 'curso', FILTER_SANITIZE_STRING);
 
+    // Se o usuário enviou uma nova foto, processa o upload
+    if (!empty($_FILES['foto_perfil']['name'])) {
+        // Verifica o tipo e o tamanho do arquivo
+        $foto_tmp = $_FILES['foto_perfil']['tmp_name'];
+        $foto_nome = 'uploads/' . basename($_FILES['foto_perfil']['name']);
+        $foto_tipo = mime_content_type($foto_tmp);
+        
+        // Valida se o arquivo é uma imagem (você pode adicionar mais validações como o tipo de imagem)
+        if (in_array($foto_tipo, ['image/jpeg', 'image/png', 'image/gif'])) {
+            move_uploaded_file($foto_tmp, $foto_nome);
+            $foto = $foto_nome; // Atribui o caminho do arquivo à variável $foto
+        } else {
+            echo "<p style='color: red;'>Erro: o arquivo enviado não é uma imagem válida.</p>";
+        }
+    }
+
     // Prepara a consulta SQL para atualização
     $sql_update = "UPDATE Usuario SET
                     foto_perfil = ?,
@@ -72,24 +88,28 @@ $conexao->close();
 <head>
     <meta charset="UTF-8">
     <title>Editar Perfil</title>
-     <link rel="stylesheet" href="./CSS/editar.css">
-     <style></style>
+    <link rel="stylesheet" href="./CSS/editar.css">
+    <style></style>
 </head>
 <body>
     <div class="form-container">
         <h2>Editar Perfil</h2>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="foto_perfil">Foto de perfil:</label>
-                <input type="file" id="foto_perfil" name="foto_perfil" value="<?= htmlspecialchars($usuario['foto_perfil'] ?? '') ?>">
+                
+                <?php if (!empty($usuario['foto_perfil'])): ?>
+                    <img src="<?= htmlspecialchars($usuario['foto_perfil']) ?>" alt="Foto de perfil" style="width: 100px; height: 100px; border-radius: 50%;"><br><br>
+                <?php endif; ?>
+                <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
             </div>
             <div class="form-group">
                 <label for="nome_completo">Nome Completo:</label>
-                <input type="text" id="nome_completo" name="nome_completo" value="<?= htmlspecialchars($usuario['nome'] ?? '') ?>">
+                <input type="text" id="nome_completo" name="nome_completo" value="<?= htmlspecialchars($usuario['nome'] ?? '') ?>" required>
             </div>
             <div class="form-group">
                 <label for="nome_usuario">Nome de Usuário:</label>
-                <input type="text" id="nome_usuario" name="nome_usuario" value="<?= htmlspecialchars($usuario['nome_usuario'] ?? '') ?>">
+                <input type="text" id="nome_usuario" name="nome_usuario" value="<?= htmlspecialchars($usuario['nome_usuario'] ?? '') ?>" required>
             </div>
             
             <button type="submit">Alterar</button>

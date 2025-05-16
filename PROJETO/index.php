@@ -3,12 +3,21 @@ session_start();
 require_once 'paginas/conecta_db.php';
 $obj = conecta_db();
 
+// Consulta para buscar as postagens
 $query = "SELECT p.*, u.nome_usuario 
         FROM Postagem p 
         LEFT JOIN Usuario u ON p.id_usuario = u.usuario_id 
         ORDER BY p.postagem_id DESC";
-$resultado = $obj->query($query);
+$resultado_postagens = $obj->query($query);
 
+// Consulta para buscar a foto de perfil do usuário logado
+$query_foto = 'SELECT foto_perfil FROM Usuario WHERE usuario_id = ?';
+$stmt = $obj->prepare($query_foto);
+$stmt->bind_param('i', $_SESSION['usuario_id']);
+$stmt->execute();
+$stmt->bind_result($foto_perfil);
+$stmt->fetch();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -22,9 +31,6 @@ $resultado = $obj->query($query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-
-
 </head>
 <body>
 
@@ -39,15 +45,13 @@ $resultado = $obj->query($query);
     <button class="publicar-btn" onclick="window.location.href='include.php?dir=paginas&file=editar-perfil'">Publicar</button>
 </div>
 
-
-
 <div class="content">
     <div class="container mt-4">
         <h2 class="mb-4">Postagens Recentes</h2>
 
         <?php 
-        if($resultado -> num_rows > 0):
-            while ($linha = $resultado->fetch_assoc()): ?>
+        if($resultado_postagens->num_rows > 0):
+            while ($linha = $resultado_postagens->fetch_assoc()): ?>
                 <div class="post-container">
                     <?php if (!empty($linha['postagem_image'])): ?>
                         <img src="<?= htmlspecialchars($linha['postagem_image']) ?>" alt="Imagem do objeto">
@@ -74,18 +78,25 @@ $resultado = $obj->query($query);
 </div>
 
 <?php
-//se estiver logado ira aparecer a opcao de editar perfil
-    if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true){
-        echo "<div class='profile'>";
-        echo "<img src='https://via.placeholder.com/80' alt='Foto de perfil'>";
-        echo "<h3>{$_SESSION['nome_usuario']}</h3>";
-        echo "<p>@{$_SESSION['nome']}</p>";
-        echo "<button class='btn btn-primary' onclick=\"window.location.href='#'\">Editar Perfil</button>";
-        echo "<button class='btn btn-primary' onclick=\"window.location.href='include.php?dir=paginas&file=del_usu'\">Sair</button>";
-        echo '</div>';
-    } else {
-        //caso nao esteja, mostrara na tela o guia de como usar o achei na puc
-        echo "<div class='profile'>
+// Se estiver logado, exibe o perfil e a foto
+if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true):
+    echo "<div class='profile'>";
+    
+    // Exibe a foto de perfil
+    if (!empty($foto_perfil)): 
+        echo "<img src='$foto_perfil' alt='Foto de perfil' class='profile-img' style='width: 100px; height: 100px; border-radius: 50%;'>";
+    else:
+        echo "<p>Foto de perfil não encontrada.</p>";
+    endif;
+
+    echo "<h3>{$_SESSION['usuario']}</h3>";
+    echo "<p>@{$_SESSION['usuario']}</p>";
+    echo "<button class='btn btn-primary' onclick=\"window.location.href='include.php?dir=paginas&file=editar'\">Editar Perfil</button>";
+    echo "<button class='btn btn-primary' onclick=\"window.location.href='include.php?dir=paginas&file=del_usu'\">Sair</button>";
+    echo '</div>';
+else:
+    // Caso não esteja logado, exibe o guia de uso
+    echo "<div class='profile'>
             <div class='side-help-box'>
                 <h5><i class='fas fa-question-circle'></i> Como usar o Achei na PUCPR?</h5>
                 <ol class='small mt-3'>
@@ -95,12 +106,9 @@ $resultado = $obj->query($query);
                     <li>🖼️ Adicione uma <strong>foto</strong> se quiser, para ajudar na identificação.</li>
                     <li>💬 Use os <strong>comentários</strong> para combinar devolução.</li>
                 </ol>
-</div>
-            </div>";
-
-        
-        
-    }
+            </div>
+          </div>";
+endif;
 ?>
 
 </body>
