@@ -42,58 +42,158 @@ if (isset($_POST['email'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - AcheiNaPuc</title>
-    <link rel="stylesheet" href="../CSS/cadastro.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f8fa;
+            color: #0f1419;
+            overflow-x: hidden;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #0f1419;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #7b0828;
+            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
+        }
+        .btn-danger {
+            background-color: #7b0828;
+            border-color: #7b0828;
+        }
+        .btn-danger:hover {
+            background-color: #5a061f;
+            border-color: #5a061f;
+        }
+        .alert {
+            border-radius: 8px;
+        }
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: #7b0828;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .form-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .row {
+                margin: 0;
+            }
+            .col-md-6 {
+                padding: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-container">
-                    <h2 class="text-center mb-4">Cadastro</h2>
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-user-plus"></i> Cadastro
+                    </h2>
+
+                    <?php if (isset($error_message)): ?>
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+                        </div>
+                    <?php endif; ?>
+
                     <form action="" method="POST" class="needs-validation" novalidate>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        <div class="row g-3">
+                            <div class="col-md-6">
                                 <label for="nome" class="form-label">
                                     <i class="fas fa-user"></i> Nome completo
                                 </label>
-                                <input type="text" class="form-control" name="nome" required placeholder="Digite seu nome completo">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="nome"
+                                       name="nome" 
+                                       required 
+                                       placeholder="Digite seu nome completo">
                                 <div class="invalid-feedback">Por favor, digite seu nome completo.</div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label for="nome_usuario" class="form-label">
                                     <i class="fas fa-at"></i> Nome de Usuário
                                 </label>
-                                <input type="text" class="form-control" name="nome_usuario" required placeholder="Digite seu nome de usuário">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="nome_usuario"
+                                       name="nome_usuario" 
+                                       required 
+                                       placeholder="Digite seu nome de usuário">
                                 <div class="invalid-feedback">Por favor, escolha um nome de usuário.</div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-6">
                                 <label for="email" class="form-label">
                                     <i class="fas fa-envelope"></i> Email
                                 </label>
-                                <input type="email" class="form-control" name="email" required placeholder="Digite seu email">
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="email"
+                                       name="email" 
+                                       required 
+                                       placeholder="Digite seu email">
                                 <div class="invalid-feedback">Por favor, digite um email válido.</div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
                                 <label for="senha" class="form-label">
                                     <i class="fas fa-lock"></i> Senha
                                 </label>
-                                <input type="password" class="form-control" name="senha" required placeholder="Crie sua senha">
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="senha"
+                                       name="senha" 
+                                       required 
+                                       placeholder="Crie sua senha">
                                 <div class="invalid-feedback">Por favor, crie uma senha.</div>
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mt-3">
                             <label for="curso_usuario" class="form-label">
                                 <i class="fas fa-graduation-cap"></i> Curso
                             </label>
-                            <select class="form-select" name="curso_usuario" required>
+                            <select class="form-select" id="curso_usuario" name="curso_usuario" required>
                                 <option value="" disabled selected>Selecione seu curso</option>
                                 <option>Administração</option>
                                 <option>Administração Internacional</option>
@@ -169,7 +269,7 @@ if (isset($_POST['email'])) {
                             <div class="invalid-feedback">Por favor, selecione seu curso.</div>
                         </div>
 
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-danger">
                                 <i class="fas fa-user-plus"></i> Cadastrar
                             </button>
@@ -198,6 +298,15 @@ if (isset($_POST['email'])) {
                 }, false)
             })
         })()
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                // Add your mobile menu toggle logic here if needed
+            });
+        });
     </script>
 </body>
 </html>

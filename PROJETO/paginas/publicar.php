@@ -8,11 +8,90 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
         
         $obj = conecta_db();
         $imagem_nome = null;
+        
         if (!empty($_FILES['postagem_image']['name'])) {
-            $imagem_nome = 'uploads/' . basename($_FILES['postagem_image']['name']);
-            $caminho_temp = $_FILES['postagem_image']['tmp_name'];
-            move_uploaded_file($caminho_temp, $imagem_nome);
+            // Create uploads directory if it doesn't exist
+            if (!file_exists('uploads')) {
+                mkdir('uploads', 0777, true);
+            }
+
+            // Generate unique filename
+            $file_extension = strtolower(pathinfo($_FILES['postagem_image']['name'], PATHINFO_EXTENSION));
+            $imagem_nome = 'uploads/' . uniqid() . '.' . $file_extension;
+            
+            // Validate file type
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+            if (!in_array($file_extension, $allowed_types)) {
+                echo "<div class='alert alert-danger'><h5>Tipo de arquivo não permitido!</h5></div>";
+                exit();
+            }
+
+            // Validate file size (2MB max)
+            if ($_FILES['postagem_image']['size'] > 2 * 1024 * 1024) {
+                echo "<div class='alert alert-danger'><h5>A imagem deve ter no máximo 2MB!</h5></div>";
+                exit();
+            }
+
+            // Get image info
+            list($width, $height) = getimagesize($_FILES['postagem_image']['tmp_name']);
+            
+            // Calculate new dimensions (max 800x800 while maintaining aspect ratio)
+            $max_dimension = 800;
+            if ($width > $height) {
+                $new_width = $max_dimension;
+                $new_height = floor($height * ($max_dimension / $width));
+            } else {
+                $new_height = $max_dimension;
+                $new_width = floor($width * ($max_dimension / $height));
+            }
+
+            // Create new image
+            $new_image = imagecreatetruecolor($new_width, $new_height);
+
+            // Handle different image types
+            switch ($file_extension) {
+                case 'jpg':
+                case 'jpeg':
+                    $source = imagecreatefromjpeg($_FILES['postagem_image']['tmp_name']);
+                    break;
+                case 'png':
+                    $source = imagecreatefrompng($_FILES['postagem_image']['tmp_name']);
+                    // Preserve transparency for PNG
+                    imagealphablending($new_image, false);
+                    imagesavealpha($new_image, true);
+                    break;
+                case 'gif':
+                    $source = imagecreatefromgif($_FILES['postagem_image']['tmp_name']);
+                    break;
+            }
+
+            // Resize image
+            imagecopyresampled(
+                $new_image, $source,
+                0, 0, 0, 0,
+                $new_width, $new_height,
+                $width, $height
+            );
+
+            // Save resized image
+            switch ($file_extension) {
+                case 'jpg':
+                case 'jpeg':
+                    imagejpeg($new_image, $imagem_nome, 90);
+                    break;
+                case 'png':
+                    imagepng($new_image, $imagem_nome, 9);
+                    break;
+                case 'gif':
+                    imagegif($new_image, $imagem_nome);
+                    break;
+            }
+
+            // Clean up
+            imagedestroy($new_image);
+            imagedestroy($source);
         }
+
         //comando sql
         $query = "INSERT INTO Postagem (
             postagem_nome,
@@ -60,35 +139,153 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar - AcheiNaPuc</title>
-    
-    <link rel="stylesheet" href="../CSS/publicar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f8fa;
+            color: #0f1419;
+            overflow-x: hidden;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #0f1419;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #7b0828;
+            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
+        }
+        .btn-danger {
+            background-color: #7b0828;
+            border-color: #7b0828;
+        }
+        .btn-danger:hover {
+            background-color: #5a061f;
+            border-color: #5a061f;
+        }
+        .alert {
+            border-radius: 8px;
+        }
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: #7b0828;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .text-muted {
+            color: #536471 !important;
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .form-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .row {
+                margin: 0;
+            }
+            .col-md-6 {
+                padding: 0;
+            }
+        }
+        .image-preview-container {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .image-preview {
+            max-width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: none;
+            margin: 0 auto;
+        }
+        .image-upload-container {
+            position: relative;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .image-upload-container:hover {
+            border-color: #7b0828;
+        }
+        .image-upload-container i {
+            font-size: 2rem;
+            color: #7b0828;
+            margin-bottom: 1rem;
+        }
+        .image-upload-container input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-container">
-                    <h2 class="text-center mb-4">Publicar Item</h2>
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-plus-circle"></i> Publicar Item
+                    </h2>
                     
                     <?php if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
                         <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
+                            <div class="row g-3">
+                                <div class="col-md-6">
                                     <label for="postagem_nome" class="form-label">
                                         <i class="fas fa-heading"></i> Título
                                     </label>
-                                    <input type="text" class="form-control" name="postagem_nome" required>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="postagem_nome"
+                                           name="postagem_nome" 
+                                           required
+                                           placeholder="Digite o título do item">
                                     <div class="invalid-feedback">Por favor, digite um título.</div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <label for="postagem_usuario_tipo" class="form-label">
                                         <i class="fas fa-tag"></i> Tipo
                                     </label>
-                                    <select class="form-select" name="postagem_usuario_tipo" required>
+                                    <select class="form-select" id="postagem_usuario_tipo" name="postagem_usuario_tipo" required>
                                         <option value="" disabled selected>Selecione o tipo</option>
                                         <option value="Perdi">Perdi</option>
                                         <option value="Achei">Achei</option>
@@ -97,47 +294,66 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                                 </div>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mt-3">
                                 <label for="postagem_descricao" class="form-label">
                                     <i class="fas fa-align-left"></i> Descrição
                                 </label>
-                                <textarea class="form-control" name="postagem_descricao" rows="3" required></textarea>
+                                <textarea class="form-control" 
+                                          id="postagem_descricao"
+                                          name="postagem_descricao" 
+                                          rows="3" 
+                                          required
+                                          placeholder="Descreva o item encontrado/perdido"></textarea>
                                 <div class="invalid-feedback">Por favor, forneça uma descrição.</div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
                                     <label for="postagem_local" class="form-label">
                                         <i class="fas fa-map-marker-alt"></i> Local
                                     </label>
-                                    <input type="text" class="form-control" name="postagem_local" required>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="postagem_local"
+                                           name="postagem_local" 
+                                           required
+                                           placeholder="Onde o item foi encontrado/perdido">
                                     <div class="invalid-feedback">Por favor, informe o local.</div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <label for="postagem_data" class="form-label">
                                         <i class="fas fa-calendar"></i> Data
                                     </label>
-                                    <input type="date" class="form-control" name="postagem_data" required>
+                                    <input type="date" 
+                                           class="form-control" 
+                                           id="postagem_data"
+                                           name="postagem_data" 
+                                           required>
                                     <div class="invalid-feedback">Por favor, selecione a data.</div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-6">
                                     <label for="postagem_cor" class="form-label">
                                         <i class="fas fa-palette"></i> Cor
                                     </label>
-                                    <input type="text" class="form-control" name="postagem_cor" required>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="postagem_cor"
+                                           name="postagem_cor" 
+                                           required
+                                           placeholder="Cor do item">
                                     <div class="invalid-feedback">Por favor, informe a cor.</div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6">
                                     <label for="postagem_categoria" class="form-label">
                                         <i class="fas fa-folder"></i> Categoria
                                     </label>
-                                    <select class="form-select" name="postagem_categoria" required>
-                                        <option value="">Selecione</option>
+                                    <select class="form-select" id="postagem_categoria" name="postagem_categoria" required>
+                                        <option value="" disabled selected>Selecione uma categoria</option>
                                         <option value="Eletrônico">Eletrônico</option>
                                         <option value="Documentos">Documentos</option>
                                         <option value="Roupa">Roupa</option>
@@ -147,15 +363,27 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                                 </div>
                             </div>
 
-                            <div class="mb-4">
-                                <label for="postagem_image" class="form-label">
+                            <div class="mt-3">
+                                <label class="form-label">
                                     <i class="fas fa-image"></i> Imagem
                                 </label>
-                                <input type="file" class="form-control" name="postagem_image" accept="image/*">
-                                <small class="text-muted">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</small>
+                                <div class="image-upload-container">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p class="mb-0">Clique ou arraste uma imagem aqui</p>
+                                    <small class="text-muted d-block mt-2">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</small>
+                                    <input type="file" 
+                                           class="form-control" 
+                                           id="postagem_image"
+                                           name="postagem_image" 
+                                           accept="image/*"
+                                           onchange="previewImage(this)">
+                                </div>
+                                <div class="image-preview-container">
+                                    <img id="imagePreview" class="image-preview" alt="Preview">
+                                </div>
                             </div>
 
-                            <div class="d-grid gap-2">
+                            <div class="d-grid gap-2 mt-4">
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fas fa-paper-plane"></i> Publicar
                                 </button>
@@ -193,6 +421,86 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                 }, false)
             })
         })()
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                // Add your mobile menu toggle logic here if needed
+            });
+        });
+
+        // Image preview and validation
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const file = input.files[0];
+            
+            if (file) {
+                // Validate file size (2MB max)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('A imagem deve ter no máximo 2MB');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                // Validate file type
+                if (!file.type.match('image.*')) {
+                    alert('Por favor, selecione apenas imagens');
+                    input.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Drag and drop functionality
+        const dropZone = document.querySelector('.image-upload-container');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropZone.classList.add('border-danger');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('border-danger');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            const input = document.getElementById('postagem_image');
+            input.files = files;
+            previewImage(input);
+        }
     </script>
 </body>
 </html>
