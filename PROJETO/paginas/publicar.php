@@ -57,91 +57,142 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Publicar Achado ou Perdido</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar - AcheiNaPuc</title>
     
-    <link rel="stylesheet" href="./CSS/publicar.css">
+    <link rel="stylesheet" href="../CSS/publicar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container my-5">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h2 class="text-center mb-4">Cadastro de Achado ou Perdido</h2>
-                
-                <?php
-                //verifica novamente se esta logado ou nao
-                if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        <!-- Dados da postagem -->
-                        <div class="mb-3">
-                            <label for="postagem_nome" class="form-label">Título da Postagem:</label>
-                            <input type="text" class="form-control" name="postagem_nome" required>
+                <div class="form-container">
+                    <h2 class="text-center mb-4">Publicar Item</h2>
+                    
+                    <?php if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
+                        <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="postagem_nome" class="form-label">
+                                        <i class="fas fa-heading"></i> Título
+                                    </label>
+                                    <input type="text" class="form-control" name="postagem_nome" required>
+                                    <div class="invalid-feedback">Por favor, digite um título.</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="postagem_usuario_tipo" class="form-label">
+                                        <i class="fas fa-tag"></i> Tipo
+                                    </label>
+                                    <select class="form-select" name="postagem_usuario_tipo" required>
+                                        <option value="" disabled selected>Selecione o tipo</option>
+                                        <option value="Perdi">Perdi</option>
+                                        <option value="Achei">Achei</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, selecione o tipo.</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="postagem_descricao" class="form-label">
+                                    <i class="fas fa-align-left"></i> Descrição
+                                </label>
+                                <textarea class="form-control" name="postagem_descricao" rows="3" required></textarea>
+                                <div class="invalid-feedback">Por favor, forneça uma descrição.</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="postagem_local" class="form-label">
+                                        <i class="fas fa-map-marker-alt"></i> Local
+                                    </label>
+                                    <input type="text" class="form-control" name="postagem_local" required>
+                                    <div class="invalid-feedback">Por favor, informe o local.</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="postagem_data" class="form-label">
+                                        <i class="fas fa-calendar"></i> Data
+                                    </label>
+                                    <input type="date" class="form-control" name="postagem_data" required>
+                                    <div class="invalid-feedback">Por favor, selecione a data.</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="postagem_cor" class="form-label">
+                                        <i class="fas fa-palette"></i> Cor
+                                    </label>
+                                    <input type="text" class="form-control" name="postagem_cor" required>
+                                    <div class="invalid-feedback">Por favor, informe a cor.</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="postagem_categoria" class="form-label">
+                                        <i class="fas fa-folder"></i> Categoria
+                                    </label>
+                                    <select class="form-select" name="postagem_categoria" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Eletrônico">Eletrônico</option>
+                                        <option value="Documentos">Documentos</option>
+                                        <option value="Roupa">Roupa</option>
+                                        <option value="Outro">Outro</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, selecione uma categoria.</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="postagem_image" class="form-label">
+                                    <i class="fas fa-image"></i> Imagem
+                                </label>
+                                <input type="file" class="form-control" name="postagem_image" accept="image/*">
+                                <small class="text-muted">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</small>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-paper-plane"></i> Publicar
+                                </button>
+                                <a href="index.php" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </a>
+                            </div>
+                        </form>
+                    <?php else: ?>
+                        <div class="alert alert-warning text-center">
+                            <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+                            <h5>Você precisa estar logado para publicar um item.</h5>
+                            <a href="include.php?dir=paginas&file=login" class="btn btn-danger mt-3">
+                                <i class="fas fa-sign-in-alt"></i> Ir para Login
+                            </a>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="postagem_descricao" class="form-label">Descrição:</label>
-                            <textarea class="form-control" name="postagem_descricao" rows="3" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="postagem_local" class="form-label">Local onde foi encontrado/perdido:</label>
-                            <input type="text" class="form-control" name="postagem_local" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="postagem_cor" class="form-label">Cor do objeto:</label>
-                            <input type="text" class="form-control" name="postagem_cor" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="postagem_categoria" class="form-label">Categoria:</label>
-                            <select class="form-control" name="postagem_categoria" required>
-                                <option value="">Selecione</option>
-                                <option value="Eletrônico">Eletrônico</option>
-                                <option value="Documentos">Documentos</option>
-                                <option value="Roupa">Roupa</option>
-                                <option value="Outro">Outro</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="postagem_data" class="form-label">Data em que foi encontrado/perdido:</label>
-                            <input type="date" class="form-control" name="postagem_data" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="postagem_image" class="form-label">Imagem do objeto:</label>
-                            <input type="file" class="form-control" name="postagem_image" accept="image/*" >
-                            <small class="text-muted">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</small>
-                        </div>
-
-                        <hr>
-
-                        <div class="mb-3">
-                            <label for="postagem_usuario_tipo" class="form-label">Tipo da postagem</label>
-                            <select class="form-control" name="postagem_usuario_tipo" required>
-                                <option value="" disabled selected>Selecione o tipo da postagem</option>
-                                <option value="Perdi">Perdi</option>
-                                <option value="Achei">Achei</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn btn-danger w-100">Publicar</button>
-                    </form>
-                
-                <!--caso o usuario tente acessar sem estar logado -->
-                <?php else: ?>
-                    <div class="alert text-center">
-                        <h5>Você precisa estar logado para publicar um item.</h5>
-                        <a href="include.php?dir=paginas&file=login" class="btn btn-outline-danger mt-3">Ir para Login</a>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
 </body>
 </html>
