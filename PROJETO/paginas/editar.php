@@ -71,29 +71,210 @@ $conexao->close();
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Perfil</title>
-     <link rel="stylesheet" href="./CSS/editar.css">
-     <style></style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - AcheiNaPuc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f8fa;
+            color: #0f1419;
+            overflow-x: hidden;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #0f1419;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus {
+            border-color: #7b0828;
+            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
+        }
+        .btn-danger {
+            background-color: #7b0828;
+            border-color: #7b0828;
+        }
+        .btn-danger:hover {
+            background-color: #5a061f;
+            border-color: #5a061f;
+        }
+        .alert {
+            border-radius: 8px;
+        }
+        .profile-image-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            display: block;
+            border: 3px solid #7b0828;
+        }
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: #7b0828;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .form-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .profile-image-preview {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Editar Perfil</h2>
-        <form method="POST">
-            <div class="form-group">
-                <label for="foto_perfil">Foto de perfil:</label>
-                <input type="file" id="foto_perfil" name="foto_perfil" value="<?= htmlspecialchars($usuario['foto_perfil'] ?? '') ?>">
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-user-edit"></i> Editar Perfil
+                    </h2>
+
+                    <?php if (isset($success_message)): ?>
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> <?php echo $success_message; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($error_message)): ?>
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+                        <div class="text-center mb-4">
+                            <img src="<?php echo htmlspecialchars($usuario['foto_perfil'] ?? '../assets/default-avatar.png'); ?>" 
+                                 alt="Foto de perfil" 
+                                 class="profile-image-preview" 
+                                 id="profile-preview">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="foto_perfil" class="form-label">
+                                <i class="fas fa-camera"></i> Foto de Perfil
+                            </label>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="foto_perfil" 
+                                   name="foto_perfil" 
+                                   accept="image/*"
+                                   onchange="previewImage(this)">
+                            <div class="form-text">Formatos aceitos: JPG, PNG, GIF (Máx. 2MB)</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nome_completo" class="form-label">
+                                <i class="fas fa-user"></i> Nome Completo
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="nome_completo" 
+                                   name="nome_completo" 
+                                   value="<?php echo htmlspecialchars($usuario['nome'] ?? ''); ?>" 
+                                   required
+                                   placeholder="Digite seu nome completo">
+                            <div class="invalid-feedback">Por favor, digite seu nome completo.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="nome_usuario" class="form-label">
+                                <i class="fas fa-at"></i> Nome de Usuário
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="nome_usuario" 
+                                   name="nome_usuario" 
+                                   value="<?php echo htmlspecialchars($usuario['nome_usuario'] ?? ''); ?>" 
+                                   required
+                                   placeholder="Digite seu nome de usuário">
+                            <div class="invalid-feedback">Por favor, digite seu nome de usuário.</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-save"></i> Salvar Alterações
+                            </button>
+                            <a href="index.php" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Voltar
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="nome_completo">Nome Completo:</label>
-                <input type="text" id="nome_completo" name="nome_completo" value="<?= htmlspecialchars($usuario['nome'] ?? '') ?>">
-            </div>
-            <div class="form-group">
-                <label for="nome_usuario">Nome de Usuário:</label>
-                <input type="text" id="nome_usuario" name="nome_usuario" value="<?= htmlspecialchars($usuario['nome_usuario'] ?? '') ?>">
-            </div>
-            
-            <button type="submit">Alterar</button>
-        </form>
+        </div>
     </div>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        // Image preview
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                // Add your mobile menu toggle logic here if needed
+            });
+        });
+    </script>
 </body>
 </html>
