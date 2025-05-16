@@ -8,7 +8,8 @@ create table Usuario(
     senha VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     curso_usuario VARCHAR(50) NOT NULL,
-    foto_perfil VARCHAR(255) 
+    foto_perfil VARCHAR(255),
+    usuario_ativo BOOLEAN
 );
 
 create table Moderador(
@@ -40,6 +41,7 @@ create table Comentarios(
     comentario_id INT PRIMARY KEY AUTO_INCREMENT,
     comentario_data DATETIME DEFAULT CURRENT_TIMESTAMP,
     comentario_conteudo VARCHAR(500) NOT NULL,
+    comentario_privado BOOLEAN,
     postagem_id INT NOT NULL,
     usuario_id INT NOT NULL, 
     FOREIGN KEY (postagem_id) REFERENCES Postagem(postagem_id),
