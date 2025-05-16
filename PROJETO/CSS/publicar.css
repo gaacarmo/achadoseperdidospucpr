@@ -1,33 +1,106 @@
 body {
     background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: clamp(15px, 3vw, 30px);
 }
+
 .container {
-    padding: 5rem;
+    background-color: #ffffff;
+    padding: clamp(20px, 3vw, 5rem);
     border-radius: 15px;
+    width: min(95%, 800px);
+    margin: clamp(20px, 5vh, 50px) auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 h2 {
     color: #7b0828;
     font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    margin-bottom: clamp(20px, 3vw, 30px);
+    text-align: center;
 }
+
 .form-label {
     color: #343a40;
     font-weight: 500;
+    font-size: clamp(14px, 1.5vw, 16px);
+    margin-bottom: clamp(5px, 1vw, 8px);
 }
+
+.form-control {
+    font-size: clamp(14px, 1.5vw, 16px);
+    padding: clamp(8px, 1.5vw, 12px);
+    margin-bottom: clamp(15px, 2vw, 20px);
+}
+
 .form-control:focus {
     border-color: #7b0828;
     box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
 }
+
 .btn-danger {
     background-color: #7b0828;
     border-color: #7b0828;
+    font-size: clamp(14px, 1.5vw, 16px);
+    padding: clamp(8px, 1.5vw, 12px) clamp(16px, 2vw, 24px);
+    width: 100%;
+    max-width: 300px;
+    margin: clamp(20px, 3vw, 30px) auto;
+    display: block;
 }
+
 .btn-danger:hover {
     background-color: #5e061f;
     border-color: #5e061f;
 }
+
 select.form-control {
     background-color: #fff;
+    cursor: pointer;
 }
+
 .alert {
-    margin-top: 20px;
+    margin-top: clamp(15px, 2vw, 20px);
+    font-size: clamp(14px, 1.5vw, 16px);
+    padding: clamp(10px, 1.5vw, 15px);
+}
+
+.form-group {
+    margin-bottom: clamp(15px, 2vw, 20px);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 15px auto;
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .col-md-6 {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    .btn-danger {
+        width: 100%;
+    }
 }

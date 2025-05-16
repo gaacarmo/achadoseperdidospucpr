@@ -33,6 +33,9 @@ $stmt->close();
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
 
 <div class="sidebar">
     <div>
@@ -45,9 +48,9 @@ $stmt->close();
     <button class="publicar-btn" onclick="window.location.href='include.php?dir=paginas&file=editar-perfil'">Publicar</button>
 </div>
 
-<div class="content">
-    <div class="container mt-4">
-        <h2 class="mb-4">Postagens Recentes</h2>
+    <div class="content">
+        <div class="container mt-4">
+            <h2 class="mb-4">Postagens Recentes</h2>
 
         <?php 
         if($resultado_postagens->num_rows > 0):
@@ -111,5 +114,31 @@ else:
 endif;
 ?>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768) {
+                    if (!sidebar.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
