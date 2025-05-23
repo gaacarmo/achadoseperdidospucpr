@@ -14,82 +14,29 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
             if (!file_exists('uploads')) {
                 mkdir('uploads', 0777, true);
             }
-
+        
             // Generate unique filename
             $file_extension = strtolower(pathinfo($_FILES['postagem_image']['name'], PATHINFO_EXTENSION));
             $imagem_nome = 'uploads/' . uniqid() . '.' . $file_extension;
-            
+        
             // Validate file type
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
             if (!in_array($file_extension, $allowed_types)) {
                 echo "<div class='alert alert-danger'><h5>Tipo de arquivo não permitido!</h5></div>";
                 exit();
             }
-
+        
             // Validate file size (2MB max)
             if ($_FILES['postagem_image']['size'] > 2 * 1024 * 1024) {
                 echo "<div class='alert alert-danger'><h5>A imagem deve ter no máximo 2MB!</h5></div>";
                 exit();
             }
-
-            // Get image info
-            list($width, $height) = getimagesize($_FILES['postagem_image']['tmp_name']);
-            
-            // Calculate new dimensions (max 800x800 while maintaining aspect ratio)
-            $max_dimension = 800;
-            if ($width > $height) {
-                $new_width = $max_dimension;
-                $new_height = floor($height * ($max_dimension / $width));
-            } else {
-                $new_height = $max_dimension;
-                $new_width = floor($width * ($max_dimension / $height));
+        
+            // Move uploaded file to uploads directory without resizing
+            if (!move_uploaded_file($_FILES['postagem_image']['tmp_name'], $imagem_nome)) {
+                echo "<div class='alert alert-danger'><h5>Erro ao enviar a imagem!</h5></div>";
+                exit();
             }
-
-            // Create new image
-            $new_image = imagecreatetruecolor($new_width, $new_height);
-
-            // Handle different image types
-            switch ($file_extension) {
-                case 'jpg':
-                case 'jpeg':
-                    $source = imagecreatefromjpeg($_FILES['postagem_image']['tmp_name']);
-                    break;
-                case 'png':
-                    $source = imagecreatefrompng($_FILES['postagem_image']['tmp_name']);
-                    // Preserve transparency for PNG
-                    imagealphablending($new_image, false);
-                    imagesavealpha($new_image, true);
-                    break;
-                case 'gif':
-                    $source = imagecreatefromgif($_FILES['postagem_image']['tmp_name']);
-                    break;
-            }
-
-            // Resize image
-            imagecopyresampled(
-                $new_image, $source,
-                0, 0, 0, 0,
-                $new_width, $new_height,
-                $width, $height
-            );
-
-            // Save resized image
-            switch ($file_extension) {
-                case 'jpg':
-                case 'jpeg':
-                    imagejpeg($new_image, $imagem_nome, 90);
-                    break;
-                case 'png':
-                    imagepng($new_image, $imagem_nome, 9);
-                    break;
-                case 'gif':
-                    imagegif($new_image, $imagem_nome);
-                    break;
-            }
-
-            // Clean up
-            imagedestroy($new_image);
-            imagedestroy($source);
         }
 
         //comando sql
