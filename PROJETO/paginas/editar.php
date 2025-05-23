@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Verifica se o usuário está logado e se o usuario_id está definido na sessão
 if (!isset($_SESSION['is_logged_user']) || $_SESSION['is_logged_user'] !== true || !isset($_SESSION['usuario_id'])) {
     // Redireciona para a página de login e exibe uma mensagem de erro
-    header("Location: /AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upload_path = $upload_dir . $new_filename;
                 
                 if (move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $upload_path)) {
-                    $foto = '/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/uploads/' . $new_filename;
+                    $foto = 'achadoseperdidospucpr/PROJETO/uploads/' . $new_filename;
                 } else {
                     $error_message = "Erro ao fazer upload da imagem.";
                 }
@@ -110,137 +110,7 @@ $conexao->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f8fa;
-            color: #0f1419;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 280px;
-            background-color: white;
-            padding: 1.5rem;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-        .sidebar .title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #7b0828;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f5f8fa;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            color: #0f1419;
-            text-decoration: none;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            transition: background-color 0.2s;
-        }
-        .nav-link:hover {
-            background-color: #f5f8fa;
-            color: #7b0828;
-        }
-        .nav-link i {
-            margin-right: 0.75rem;
-            width: 20px;
-            height: 20px;
-        }
-        .content {
-            margin-left: 280px;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-        .form-container {
-            background-color: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            margin: 2rem auto;
-            max-width: 800px;
-        }
-        .form-label {
-            font-weight: 500;
-            color: #0f1419;
-        }
-        .form-control {
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            border: 1px solid #ddd;
-        }
-        .form-control:focus {
-            border-color: #7b0828;
-            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
-        }
-        .btn-danger {
-            background-color: #7b0828;
-            border-color: #7b0828;
-        }
-        .btn-danger:hover {
-            background-color: #5a061f;
-            border-color: #5a061f;
-        }
-        .alert {
-            border-radius: 8px;
-        }
-        .profile-image-preview {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1.5rem;
-            display: block;
-            border: 3px solid #7b0828;
-        }
-        .mobile-menu-toggle {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1001;
-            background: #7b0828;
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            .content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-            .form-container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            .profile-image-preview {
-                width: 120px;
-                height: 120px;
-            }
-        }
-    </style>
+   
 </head>
 <body>
     <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -253,7 +123,7 @@ $conexao->close();
         </div>
         <nav>
             <div class="nav-item">
-                <a href="index.php" class="nav-link">
+                <a href="../index.php" class="nav-link">
                     <i class="fas fa-home"></i> Início
                 </a>
             </div>
@@ -263,12 +133,12 @@ $conexao->close();
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/paginas/editar.php" class="nav-link">
+                <a href="include.php?dir=paginas&file=editar" class="nav-link">
                     <i class="fas fa-user-edit"></i> Editar Perfil
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/paginas/del_usu.php" class="nav-link">
+                <a href="include.php?dir=paginas&file=del_usu" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i> Sair
                 </a>
             </div>
@@ -349,7 +219,7 @@ $conexao->close();
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fas fa-save"></i> Salvar Alterações
                                 </button>
-                                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php" class="btn btn-outline-secondary">
+                                <a href="index.php" class="btn btn-outline-secondary">
                                     <i class="fas fa-arrow-left"></i> Voltar
                                 </a>
                             </div>
