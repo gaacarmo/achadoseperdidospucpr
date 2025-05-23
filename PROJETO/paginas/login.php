@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $_SESSION['is_logged_user'] = true;
                 $_SESSION['usuario_id'] = $user['usuario_id'];
                 $_SESSION['usuario'] = $user['nome_usuario'];
-                header("Location: /AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php");
+                header("Location: index.php");
                 exit;
             } else {
                 $error_message = "Senha incorreta";
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         <button type="submit" class="btn btn-danger">
                             <i class="fas fa-sign-in-alt"></i> Entrar
                         </button>
-                        <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php" class="btn btn-outline-secondary">
+                        <a href="index.php" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left"></i> Voltar
                         </a>
                     </div>

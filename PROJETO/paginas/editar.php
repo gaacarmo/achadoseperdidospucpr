@@ -139,9 +139,7 @@ $conexao->close();
             padding-bottom: 1rem;
             border-bottom: 2px solid #f5f8fa;
         }
-        .nav-item {
-            margin-bottom: 1rem;
-        }
+        
         .nav-link {
             display: flex;
             align-items: center;
@@ -255,12 +253,12 @@ $conexao->close();
         </div>
         <nav>
             <div class="nav-item">
-                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php" class="nav-link">
+                <a href="index.php" class="nav-link">
                     <i class="fas fa-home"></i> Início
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/paginas/publicar.php" class="nav-link">
+                <a href="include.php?dir=paginas&file=publicar" class="nav-link">
                     <i class="fas fa-plus-circle"></i> Publicar
                 </a>
             </div>

@@ -68,9 +68,7 @@ if (can_send_headers()) {
             padding-bottom: 1rem;
             border-bottom: 2px solid #f5f8fa;
         }
-        .nav-item {
-            margin-bottom: 1rem;
-        }
+        
         .nav-link {
             display: flex;
             align-items: center;
@@ -78,6 +76,7 @@ if (can_send_headers()) {
             text-decoration: none;
             padding: 0.75rem 1rem;
             border-radius: 8px;
+            margin-bottom: 1rem;
             transition: background-color 0.2s;
         }
         .nav-link:hover {
@@ -260,7 +259,7 @@ if (can_send_headers()) {
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=editar">
                     <i class="fas fa-user"></i>
-                    <img src="assets/user.png" alt="perfil"> Perfil
+                   
                 </a>
             </div>
             <?php else: ?>
