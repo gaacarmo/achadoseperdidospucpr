@@ -272,7 +272,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="postagem_nome" class="form-label">
-                                        <i class="fas fa-heading"></i> Título
+                                        <i class="fas fa-heading"></i> Título <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
                                            class="form-control" 
@@ -280,15 +280,15 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                                            name="postagem_nome" 
                                            required
                                            placeholder="Digite o título do item">
-                                    <div class="invalid-feedback">Por favor, digite um título.</div>
+                                    <div class="invalid-feedback">Por favor, digite um título.</div> 
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="postagem_usuario_tipo" class="form-label">
-                                        <i class="fas fa-tag"></i> Tipo
+                                        <i class="fas fa-tag"></i> Tipo <span class="text-danger">*</span>
                                     </label>
                                     <select class="form-select" id="postagem_usuario_tipo" name="postagem_usuario_tipo" required>
-                                        <option value="" disabled selected>Selecione o tipo</option>
+                                        <option value="" disabled selected>Selecione o tipo</option> <span class="text-danger">*</span>
                                         <option value="Perdi">Perdi</option>
                                         <option value="Achei">Achei</option>
                                     </select>
@@ -298,7 +298,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
 
                             <div class="mt-3">
                                 <label for="postagem_descricao" class="form-label">
-                                    <i class="fas fa-align-left"></i> Descrição
+                                    <i class="fas fa-align-left"></i> Descrição <span class="text-danger">*</span>
                                 </label>
                                 <textarea class="form-control" 
                                           id="postagem_descricao"
@@ -312,7 +312,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                             <div class="row g-3 mt-2">
                                 <div class="col-md-6">
                                     <label for="postagem_local" class="form-label">
-                                        <i class="fas fa-map-marker-alt"></i> Local
+                                        <i class="fas fa-map-marker-alt"></i> Local <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
                                            class="form-control" 
@@ -325,7 +325,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
 
                                 <div class="col-md-6">
                                     <label for="postagem_data" class="form-label">
-                                        <i class="fas fa-calendar"></i> Data
+                                        <i class="fas fa-calendar"></i> Data <span class="text-danger">*</span>
                                     </label>
                                     <input type="date" 
                                            class="form-control" 
@@ -339,7 +339,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                             <div class="row g-3 mt-2">
                                 <div class="col-md-6">
                                     <label for="postagem_cor" class="form-label">
-                                        <i class="fas fa-palette"></i> Cor
+                                        <i class="fas fa-palette"></i> Cor <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
                                            class="form-control" 
@@ -352,7 +352,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
 
                                 <div class="col-md-6">
                                     <label for="postagem_categoria" class="form-label">
-                                        <i class="fas fa-folder"></i> Categoria
+                                        <i class="fas fa-folder"></i> Categoria <span class="text-danger">*</span>
                                     </label>
                                     <select class="form-select" id="postagem_categoria" name="postagem_categoria" required>
                                         <option value="" disabled selected>Selecione uma categoria</option>

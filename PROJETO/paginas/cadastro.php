@@ -142,7 +142,7 @@ if (isset($_POST['email'])) {
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nome" class="form-label">
-                                    <i class="fas fa-user"></i> Nome completo
+                                    <i class="fas fa-user"></i> Nome completo <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" 
                                        class="form-control" 
@@ -154,7 +154,7 @@ if (isset($_POST['email'])) {
                             </div>
                             <div class="col-md-6">
                                 <label for="nome_usuario" class="form-label">
-                                    <i class="fas fa-at"></i> Nome de Usuário
+                                    <i class="fas fa-at"></i> Nome de Usuário <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" 
                                        class="form-control" 
@@ -169,7 +169,7 @@ if (isset($_POST['email'])) {
                         <div class="row g-3 mt-2">
                             <div class="col-md-6">
                                 <label for="email" class="form-label">
-                                    <i class="fas fa-envelope"></i> Email
+                                    <i class="fas fa-envelope"></i> Email <span class="text-danger">*</span>
                                 </label>
                                 <input type="email" 
                                        class="form-control" 
@@ -181,7 +181,7 @@ if (isset($_POST['email'])) {
                             </div>
                             <div class="col-md-6">
                                 <label for="senha" class="form-label">
-                                    <i class="fas fa-lock"></i> Senha
+                                    <i class="fas fa-lock"></i> Senha <span class="text-danger">*</span>
                                 </label>
                                 <input type="password" 
                                        class="form-control" 
@@ -195,7 +195,7 @@ if (isset($_POST['email'])) {
 
                         <div class="mt-3">
                             <label for="curso_usuario" class="form-label">
-                                <i class="fas fa-graduation-cap"></i> Curso
+                                <i class="fas fa-graduation-cap"></i> Curso <span class="text-danger">*</span>
                             </label>
                             <select class="form-select" id="curso_usuario" name="curso_usuario" required>
                                 <option value="" disabled selected>Selecione seu curso</option>
