@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <form method="POST" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="nome_usuario" class="form-label">
-                            <i class="fas fa-user"></i> Nome de Usuário
+                            <i class="fas fa-user"></i> Nome de Usuário <span class="text-danger">*</span>
                         </label>
                         <input type="text" 
                                class="form-control" 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                     <div class="mb-3">
                         <label for="senha" class="form-label">
-                            <i class="fas fa-lock"></i> Senha
+                            <i class="fas fa-lock"></i> Senha <span class="text-danger">*</span>
                         </label>
                         <input type="password" 
                                class="form-control" 
