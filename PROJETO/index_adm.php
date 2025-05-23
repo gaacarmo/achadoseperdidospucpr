@@ -9,7 +9,7 @@
 <body>
     <nav>
         <div class="nav-img">
-            <a href="index_adm.php"><img src="assets/Logo.png" alt="Logo do site"></a>
+            <a href="index_adm.php"><img src="/Documentacao/Logo.png" alt="Logo do site"></a>
         </div>
         <ul>
             <li><a href="index_adm.php">Home</a></li>

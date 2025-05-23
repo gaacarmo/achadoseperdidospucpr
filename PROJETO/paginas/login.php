@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($senha == $user['moderador_senha']) {
             $_SESSION['is_logged_adm'] = true;
             $_SESSION['moderador'] = $user['moderador_usuario_nome'];
-            header("Location: /AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index_adm.php");
+            header("Location: /achadoseperdidospucpr/PROJETO/index_adm.php");
             exit;
         } else {
             $error_message = "Senha incorreta";

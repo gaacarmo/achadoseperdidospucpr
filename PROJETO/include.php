@@ -266,7 +266,7 @@ if (can_send_headers()) {
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
-                     Login
+                     Entrar
                 </a>
             </div>
             <?php endif; ?>
