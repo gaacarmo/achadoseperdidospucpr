@@ -11,6 +11,7 @@ $sucesso = '';
 if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_POST['email'])) {
     $email = $_POST['email'];
     $nova_senha = $_POST['nova_senha'];
+    $hash_nova_senha = password_hash($nova_senha, PASSWORD_DEFAULT);
     $confirmar_senha = $_POST['confirmar_senha'];
     $validado = true;
 
@@ -50,7 +51,7 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
     if ($validado) {
         $query = "UPDATE Usuario SET senha = ? WHERE email = ?";
         $stmt = $obj->prepare($query);
-        $stmt->bind_param("ss", $nova_senha, $email);
+        $stmt->bind_param("ss", $hash_nova_senha, $email);
         $resultado = $stmt->execute();
 
         if ($resultado) {

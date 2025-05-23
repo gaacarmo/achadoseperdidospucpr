@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once 'paginas/conecta_db.php';
 $obj = conecta_db();
 
-$query = "SELECT p.*, u.nome_usuario 
+$query = "SELECT p.*, u.nome_usuario, foto_perfil
         FROM Postagem p 
         LEFT JOIN Usuario u ON p.id_usuario = u.usuario_id 
         ORDER BY p.postagem_id DESC";
@@ -347,8 +347,17 @@ $resultado = $obj->query($query);
 
     <?php
     if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
+        $usuario_id = $_SESSION['usuario_id']; // Ajuste para a sua variável de sessão
+        $sqlUser = "SELECT foto_perfil FROM Usuario WHERE usuario_id = ?";
+        $stmt = $obj->prepare($sqlUser);
+        $stmt->bind_param('i', $usuario_id);
+        $stmt->execute();
+        $resultUser = $stmt->get_result();
+        $userData = $resultUser->fetch_assoc();
+        $fotoPerfil = $userData['foto_perfil'] ?? 'default.jpg';
+
         echo "<div class='profile'>";
-        echo "<img src='https://via.placeholder.com/80' alt='Foto de perfil'>";
+        echo "<img src='{$fotoPerfil}' alt='Foto de perfil'>";
         echo "<h3>{$_SESSION['usuario']}</h3>";
         echo "<p>@{$_SESSION['usuario']}</p>";
         echo "<button class='btn btn-danger' onclick=\"window.location.href='include.php?dir=paginas&file=editar'\">Editar Perfil</button>";

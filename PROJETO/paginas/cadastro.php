@@ -11,13 +11,17 @@ if (isset($_POST['email'])) {
     $stmtVerifica->execute();
     $resultadoVerifica = $stmtVerifica->get_result();
 
+    $password = $_POST['senha'];
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+
     if ($resultadoVerifica->num_rows > 0) {
         echo "<span class='alert alert-danger'><h5>Nome de usuário ou e-mail já cadastrado!</h5></span>";
     } else {
         // Se não existe, então pode inserir
         $query = "INSERT INTO Usuario (nome, nome_usuario, email, senha, curso_usuario) VALUES (?, ?, ?, ?, ?)";
         $stmt = $obj->prepare($query);
-        $stmt->bind_param("sssss", $_POST['nome'], $_POST['nome_usuario'], $_POST['email'], $_POST['senha'], $_POST['curso_usuario']);
+        $stmt->bind_param("sssss", $_POST['nome'], $_POST['nome_usuario'], $_POST['email'], $hash, $_POST['curso_usuario']);
         $resultado = $stmt->execute();
 
         if ($resultado) {
