@@ -20,5 +20,5 @@ if (isset($_COOKIE['usuario'])) {
 }
 
 // Redirect to login page
-header('Location: /AcheiNaPuc/achadoseperdidospucpr-1/PROJETO/index.php');
+header('Location: ./index.php');
 exit;

@@ -123,7 +123,7 @@ $conexao->close();
         </div>
         <nav>
             <div class="nav-item">
-                <a href="../index.php" class="nav-link">
+                <a href="./index.php" class="nav-link">
                     <i class="fas fa-home"></i> Início
                 </a>
             </div>

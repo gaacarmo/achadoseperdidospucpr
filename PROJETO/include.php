@@ -252,28 +252,28 @@ if (can_send_headers()) {
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>
-                    <img src="assets/home.png" alt="home"> Início
+                     Início
                 </a>
             </div>
             <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=editar">
                     <i class="fas fa-user"></i>
-                   
+                    Editar
                 </a>
             </div>
             <?php else: ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
-                    <img src="assets/login.png" alt="login"> Login
+                     Login
                 </a>
             </div>
             <?php endif; ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=publicar">
                     <i class="fas fa-plus"></i>
-                    <img src="assets/add.png" alt="publicar"> Publicar
+                     Publicar
                 </a>
             </div>
         </div>
