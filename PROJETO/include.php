@@ -60,6 +60,12 @@ if (can_send_headers()) {
             z-index: 1000;
             transition: transform 0.3s ease;
         }
+          .sidebar .logo-nav{
+            width: 50px;
+            height: 50px;
+            color: #7b0828;
+            
+        }
         .sidebar .title {
             font-size: 1.5rem;
             font-weight: bold;
@@ -251,7 +257,7 @@ if (can_send_headers()) {
 
     <div class="sidebar" id="sidebar">
         <div>
-            <div class="title">Achei na PUCPR</div>
+            <div class="title"><img src="./images/Group.svg"  class="logo-nav"alt="">Achei na PUCPR</div>
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>

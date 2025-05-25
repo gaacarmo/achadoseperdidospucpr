@@ -31,6 +31,7 @@ $resultado = $obj->query($query);
             padding: 0;
             overflow-x: hidden;
         }
+        
         .sidebar {
             position: fixed;
             left: 0;
@@ -42,6 +43,12 @@ $resultado = $obj->query($query);
             box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             transition: transform 0.3s ease;
+        }
+        .sidebar .logo-nav{
+            width: 50px;
+            height: 50px;
+            color: #7b0828;
+            
         }
         .sidebar .title {
             font-size: 1.5rem;
@@ -266,7 +273,7 @@ $resultado = $obj->query($query);
 
     <div class="sidebar" id="sidebar">
         <div>
-            <div class="title">Achei na PUCPR</div>
+            <div class="title"><img src="./images/Group.svg"  class="logo-nav"alt="">Achei na PUCPR</div>
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>
@@ -287,6 +294,7 @@ $resultado = $obj->query($query);
                      Entrar
                 </a>
             </div>
+            
             <?php endif; ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=publicar">
