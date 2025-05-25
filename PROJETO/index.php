@@ -215,6 +215,13 @@ $resultado = $obj->query($query);
             border-radius: 8px;
             cursor: pointer;
         }
+
+        .fa-check-circle.verified {
+            color: #28a745;
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+
         @media (max-width: 1024px) {
             .profile {
                 position: static;
@@ -313,6 +320,10 @@ $resultado = $obj->query($query);
                         <div class="post-content">
                             <h5>
                                 <?= htmlspecialchars($linha['postagem_nome']) ?>
+                                <?php if(!empty($linha['id_admin'])): ?>
+                                    <i class="fas fa-check-circle text-primary" title="Postagem verificada"></i>
+                                <?php endif; ?>
+                                
                                 <span class="badge bg-<?= $linha['postagem_usuario_tipo'] === 'Achei' ? 'success' : 'danger' ?>">
                                     <?= htmlspecialchars($linha['postagem_usuario_tipo']) ?>
                                 </span>

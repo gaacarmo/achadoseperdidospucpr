@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $senha = $_POST['senha'];
 
     // Primeiro ele tenta encontrar o usuário na tabela Moderador
-    $stmt2 = $obj->prepare("SELECT moderador_usuario_nome, moderador_senha FROM Moderador WHERE moderador_usuario_nome = ?");
+    $stmt2 = $obj->prepare("SELECT moderador_id, moderador_usuario_nome, moderador_senha FROM Moderador WHERE moderador_usuario_nome = ?");
     $stmt2->bind_param("s", $nome_usuario);
     $stmt2->execute();
     $resultado2 = $stmt2->get_result();
@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($senha == $user['moderador_senha']) {
             $_SESSION['is_logged_adm'] = true;
             $_SESSION['moderador'] = $user['moderador_usuario_nome'];
+            $_SESSION['moderador_id'] = $user['moderador_id'];
+
             header("Location: ./index_adm.php");
             exit;
         } else {
