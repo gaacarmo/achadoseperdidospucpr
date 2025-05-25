@@ -26,8 +26,8 @@ if (!$usuario) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nomeCompleto = filter_input(INPUT_POST, 'nome_completo', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $nome_usuario = filter_input(INPUT_POST, 'nome_usuario', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $nomeCompleto = filter_input(INPUT_POST, 'nome_completo', FILTER_SANITIZE_STRING);
+    $nome_usuario = filter_input(INPUT_POST, 'nome_usuario', FILTER_SANITIZE_STRING);
     $foto = $usuario['foto_perfil'];
 
     if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
@@ -85,7 +85,7 @@ $conexao->close();
             background-color: #f5f8fa;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-       
+            
         .nav-link {
             display: flex;
             align-items: center;
@@ -172,7 +172,7 @@ $conexao->close();
             <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                 <div class="text-center mb-4">
                     <img src="<?= htmlspecialchars($usuario['foto_perfil'] ?? '../assets/default-avatar.png') ?>" 
-                        alt="Foto de perfil" class="profile-image-preview" id="profile-preview">
+                         alt="Foto de perfil" class="profile-image-preview" id="profile-preview">
                 </div>
 
                 <div class="mb-3">
@@ -184,14 +184,14 @@ $conexao->close();
                 <div class="mb-3">
                     <label for="nome_completo" class="form-label"><i class="fas fa-user"></i> Nome Completo</label>
                     <input type="text" class="form-control" id="nome_completo" name="nome_completo" required 
-                        value="<?= htmlspecialchars($usuario['nome'] ?? '') ?>" placeholder="Digite seu nome completo">
+                           value="<?= htmlspecialchars($usuario['nome'] ?? '') ?>" placeholder="Digite seu nome completo">
                     <div class="invalid-feedback">Por favor, insira seu nome completo.</div>
                 </div>
 
                 <div class="mb-4">
                     <label for="nome_usuario" class="form-label"><i class="fas fa-at"></i> Nome de Usuário</label>
                     <input type="text" class="form-control" id="nome_usuario" name="nome_usuario" required 
-                        value="<?= htmlspecialchars($usuario['nome_usuario'] ?? '') ?>" placeholder="Digite seu nome de usuário">
+                           value="<?= htmlspecialchars($usuario['nome_usuario'] ?? '') ?>" placeholder="Digite seu nome de usuário">
                     <div class="invalid-feedback">Por favor, insira seu nome de usuário.</div>
                 </div>
 

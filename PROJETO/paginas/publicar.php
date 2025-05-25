@@ -246,35 +246,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
         .back-button:hover {
             text-decoration: underline;
         }
-        .profile {
-            position: fixed;
-            right: 2rem;
-            top: 2rem;
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            max-width: 300px;
-        }
-        .profile img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-        }
-        .profile h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: #0f1419;
-        }
-        .profile p {
-            color: #536471;
-            margin: 0.5rem 0 1rem;
-        }
-        .profile .btn {
-            width: 100%;
-            margin-bottom: 0.5rem;
-        }
+      
         .side-help-box {
             background-color: white;
             border-radius: 16px;

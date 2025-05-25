@@ -132,7 +132,9 @@ if (can_send_headers()) {
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             max-width: 300px;
         }
-        .profile img {
+            .profile img {
+            border-radius: 50%;
+            margin-bottom: 1rem;
             width: 120px;
             height: 120px;
             border-radius: 50%;

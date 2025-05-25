@@ -102,7 +102,7 @@ $resultado = $obj->query($query);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
         .post-container img {
-            width: 80%;
+            width: 100%;
             height: 400px;
             object-fit: contain;
             border-radius: 8px;
@@ -164,7 +164,9 @@ $resultado = $obj->query($query);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             max-width: 300px;
         }
-        .profile img {
+          .profile img {
+            border-radius: 50%;
+            margin-bottom: 1rem;
             width: 120px;
             height: 120px;
             border-radius: 50%;
@@ -182,8 +184,10 @@ $resultado = $obj->query($query);
         }
         .profile .btn {
             width: 100%;
+          
             margin-bottom: 0.5rem;
         }
+        
         .side-help-box {
             background-color: white;
             border-radius: 16px;
@@ -266,32 +270,28 @@ $resultado = $obj->query($query);
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>
-                    Início
+                     Início
                 </a>
             </div>
             <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=editar">
                     <i class="fas fa-user"></i>
-                    Perfil
+                     Perfil
                 </a>
             </div>
             <?php else: ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
-<<<<<<< Updated upstream
-                    Login
-=======
-                     Entrar
->>>>>>> Stashed changes
+                     Login
                 </a>
             </div>
             <?php endif; ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=publicar">
                     <i class="fas fa-plus"></i>
-                    Publicar
+                     Publicar
                 </a>
             </div>
         </div>
