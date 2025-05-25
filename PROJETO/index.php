@@ -22,262 +22,13 @@ $resultado = $obj->query($query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f8fa;
-            color: #0f1419;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-        
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 280px;
-            background-color: white;
-            padding: 1.5rem;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-        .sidebar .logo-nav{
-            width: 50px;
-            height: 50px;
-            color: #7b0828;
-            
-        }
-        .sidebar .title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #7b0828;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f5f8fa;
-        }
-        .nav-item {
-            margin-bottom: 1rem;
-        }
-        .nav-link {
-            display: flex;
-            align-items: center;
-            color: #0f1419;
-            text-decoration: none;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            transition: background-color 0.2s;
-        }
-        .nav-link:hover {
-            background-color: #f5f8fa;
-            color: #7b0828;
-        }
-        .nav-link i, .nav-link img {
-            margin-right: 0.75rem;
-            width: 20px;
-            height: 20px;
-        }
-        .publicar-btn {
-            position: absolute;
-            bottom: 2rem;
-            left: 1.5rem;
-            right: 1.5rem;
-            background-color: #7b0828;
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .publicar-btn:hover {
-            background-color: #5a061f;
-        }
-        .content {
-            margin-left: 280px;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-        .post-container {
-            background-color: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        }
-        .post-container img {
-            width: 100%;
-            height: 400px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            background-color: #f8f9fa;
-            padding: 0.5rem;
-        }
-        .post-content {
-            padding: 1rem 0;
-        }
-        .post-content h5 {
-            color: #0f1419;
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-        }
-        .post-content p {
-            color: #536471;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-        .post-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-        .post-actions button {
-            background: none;
-            border: none;
-            color: #536471;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-        .post-actions button:hover {
-            background-color: #f5f8fa;
-            color: #7b0828;
-        }
-        .post-actions button i {
-            margin-right: 0.5rem;
-        }
-        .badge {
-            font-size: 0.8rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            margin-left: 0.5rem;
-        }
-        .profile {
-            position: fixed;
-            right: 2rem;
-            top: 2rem;
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            max-width: 300px;
-        }
-          .profile img {
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #eee;
-        }
-        .profile h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: #0f1419;
-        }
-        .profile p {
-            color: #536471;
-            margin: 0.5rem 0 1rem;
-        }
-        .profile .btn {
-            width: 100%;
-          
-            margin-bottom: 0.5rem;
-        }
-        
-        .side-help-box {
-            background-color: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            margin-top: 1rem;
-        }
-        .side-help-box h5 {
-            color: #0f1419;
-            margin-bottom: 1rem;
-        }
-        .side-help-box ol {
-            color: #536471;
-            padding-left: 1.5rem;
-        }
-        .side-help-box li {
-            margin-bottom: 0.5rem;
-        }
-        .mobile-menu-toggle {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1001;
-            background: #7b0828;
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .fa-check-circle.verified {
-            color: #28a745;
-            margin-left: 5px;
-            font-size: 0.9em;
-        }
-
-        @media (max-width: 1024px) {
-            .profile {
-                position: static;
-                margin: 2rem auto;
-                max-width: 100%;
-            }
-        }
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            .content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-            .profile {
-                margin: 1rem;
-            }
-            .post-container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            .post-container img {
-                height: 300px;
-            }
-            .post-content h5 {
-                font-size: 1.1rem;
-            }
-            .post-content p {
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+     <link rel="stylesheet" href="./CSS/style.css">
 </head>
+
 <body>
     <button class="mobile-menu-toggle" id="mobileMenuToggle">
         <i class="fas fa-bars"></i>
     </button>
-
     <div class="sidebar" id="sidebar">
         <div>
             <div class="title"><img src="./images/Group.svg"  class="logo-nav"alt="">Achei na PUCPR</div>
@@ -308,11 +59,47 @@ $resultado = $obj->query($query);
                     <i class="fas fa-plus"></i>
                      Publicar
                 </a>
+
             </div>
-        </div>
-        <button class="publicar-btn" onclick="window.location.href='include.php?dir=paginas&file=publicar'">
+                <div class="mb-3">
+                <label class="form-check-label me-2"><b>Filtrar por tipo de postagem:</b></label>
+                <div class="form-check form-check">
+                    <input class="form-check-input filtro-tipo" type="checkbox" value="Achei" id="filtroAchei">
+                    <label class="form-check-label" for="filtroAchei">Achei</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input filtro-tipo" type="checkbox" value="Perdi" id="filtroPerdi">
+                    <label class="form-check-label" for="filtroPerdi">Perdi</label>
+                </div>
+                <br>
+                <div class="mb-3">
+                <label class="form-check-label me-2"><b>Filtrar por categoria:</b></label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filtro-categoria" type="checkbox" value="Eletrônico" id="catEletronico">
+                    <label class="form-check-label" for="catEletronico">Eletrônico</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filtro-categoria" type="checkbox" value="Documentos" id="catDocumentos">
+                    <label class="form-check-label" for="catDocumentos">Documentos</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input filtro-categoria" type="checkbox" value="Roupa" id="catRoupa">
+                    <label class="form-check-label" for="catRoupa">Roupa</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filtro-categoria" type="checkbox" value="Outro" id="catOutro">
+                    <label class="form-check-label" for="catOutro">Outro</label>
+                </div>
+            </div>
+
+            <button class="publicar-btn" onclick="window.location.href='include.php?dir=paginas&file=publicar'">
             <i class="fas fa-plus"></i> Publicar
         </button>
+            
+        </div>
+        </div>
+        </div>
+        
     </div>
 
     <div class="content">
@@ -324,7 +111,10 @@ $resultado = $obj->query($query);
             <?php 
             if($resultado->num_rows > 0):
                 while ($linha = $resultado->fetch_assoc()): ?>
-                    <div class="post-container">
+                   <div class="post-container" 
+                    data-tipo="<?= htmlspecialchars($linha['postagem_usuario_tipo']) ?>" 
+                    data-categoria="<?= htmlspecialchars($linha['postagem_categoria']) ?>">
+
                         <?php if (!empty($linha['postagem_image'])): ?>
                             <img src="<?= htmlspecialchars($linha['postagem_image']) ?>" alt="Imagem do objeto">
                         <?php endif; ?>
@@ -341,6 +131,7 @@ $resultado = $obj->query($query);
                                 </span>
                             </h5>
                             <p><?= htmlspecialchars($linha['postagem_descricao']) ?></p>
+                            <p><?= htmlspecialchars($linha['postagem_categoria']) ?></p>
                             <p>
                                 <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($linha['postagem_local']) ?> |
                                 <i class="fas fa-calendar"></i> <?= htmlspecialchars($linha['postagem_data']) ?>
@@ -404,6 +195,39 @@ $resultado = $obj->query($query);
     ?>
 
     <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        //encotra os elementos da pagina
+    const tipoCheckboxes = document.querySelectorAll('.filtro-tipo'); //-> que é uma classe
+    const categoriaCheckboxes = document.querySelectorAll('.filtro-categoria');
+    const posts = document.querySelectorAll('.post-container');
+
+    function aplicarFiltros() {
+        //aqui ele vai ver quais estao com check e armazenar o valor em um array
+        const tiposSelecionados = Array.from(tipoCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+        const categoriasSelecionadas = Array.from(categoriaCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
+        posts.forEach(post => {
+            //vai pegar os atributos de cada post
+            const tipo = post.getAttribute('data-tipo'); //foram definidos dentro da div post-container
+            const categoria = post.getAttribute('data-categoria');
+            //é verdadeiro se nao tiver nenhum checkbox selecionado ou se o tipo foi selecionado esta na pagina
+            const tipoOK = tiposSelecionados.length === 0 || tiposSelecionados.includes(tipo);
+            const categoriaOK = categoriasSelecionadas.length === 0 || categoriasSelecionadas.includes(categoria);
+            
+            //aqui ele vai mostrar na tela, caso ambos sejam verdadeiros 
+            post.style.display = (tipoOK && categoriaOK) ? '' : 'none';
+        });
+    }
+
+    //toda vez que alguem clica na checkbox é chamada a função aplicarFiltros
+    tipoCheckboxes.forEach(cb => cb.addEventListener('change', aplicarFiltros));
+    categoriaCheckboxes.forEach(cb => cb.addEventListener('change', aplicarFiltros));
+});
+
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const sidebar = document.getElementById('sidebar');
