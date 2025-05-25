@@ -85,6 +85,28 @@ $conexao->close();
             background-color: #f5f8fa;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
+       
+        .nav-link {
+            display: flex;
+            align-items: center;
+            color: #0f1419;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f8fa;
+            color: #7b0828;
+        }
+
+        .nav-link i, .nav-link img {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+        }
         .form-container {
             background-color: white;
             border-radius: 16px;

@@ -54,6 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 // Only output the form content
 ?>
+<style>
+    .btn-danger,
+    .mobile-menu-toggle {
+    background-color: #7b0828;
+    border-color: #7b0828;
+    color: white;
+}
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">

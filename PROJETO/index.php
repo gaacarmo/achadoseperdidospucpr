@@ -102,7 +102,7 @@ $resultado = $obj->query($query);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
         .post-container img {
-            width: 100%;
+            width: 80%;
             height: 400px;
             object-fit: contain;
             border-radius: 8px;
@@ -280,7 +280,11 @@ $resultado = $obj->query($query);
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
+<<<<<<< Updated upstream
                     Login
+=======
+                     Entrar
+>>>>>>> Stashed changes
                 </a>
             </div>
             <?php endif; ?>

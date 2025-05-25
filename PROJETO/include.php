@@ -260,7 +260,7 @@ if (can_send_headers()) {
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=editar">
                     <i class="fas fa-user"></i>
-                    Editar
+                    Perfil
                 </a>
             </div>
             <?php else: ?>

@@ -1,5 +1,6 @@
 <?php
 
+
 require_once 'paginas/conecta_db.php';  
 //verifica se existe a sessao e depois verifica se esta logado
 if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
@@ -97,15 +98,6 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
             color: #0f1419;
             overflow-x: hidden;
         }
-        
-        .form-container {
-            background-color: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            margin: 2rem auto;
-            max-width: 800px;
-        }
         .form-label {
             font-weight: 500;
             color: #0f1419;
@@ -199,6 +191,178 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
             opacity: 0;
             cursor: pointer;
         }
+         
+        /*side bar */
+        .nav-link {
+            display: flex;
+            align-items: center;
+            color: #0f1419;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+        .nav-link:hover {
+            background-color: #f5f8fa;
+            color: #7b0828;
+        }
+        .nav-link i, .nav-link img {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+        }
+        .publicar-btn {
+            position: absolute;
+            bottom: 2rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            background-color: #7b0828;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .publicar-btn:hover {
+            background-color: #5a061f;
+        }
+        .content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .back-button {
+            background: none;
+            border: none;
+            color: #7b0828;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .profile {
+            position: fixed;
+            right: 2rem;
+            top: 2rem;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+        }
+        .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        .profile h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #0f1419;
+        }
+        .profile p {
+            color: #536471;
+            margin: 0.5rem 0 1rem;
+        }
+        .profile .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        .side-help-box {
+            background-color: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+        }
+        .side-help-box h5 {
+            color: #0f1419;
+            margin-bottom: 1rem;
+        }
+        .side-help-box ol {
+            color: #536471;
+            padding-left: 1.5rem;
+        }
+        .side-help-box li {
+            margin-bottom: 0.5rem;
+        }
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: #7b0828;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        /* Login form styles */
+        .form-container {
+            background-color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 500px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #0f1419;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus {
+            border-color: #7b0828;
+            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
+        }
+        .form-text {
+            color: #536471;
+        }
+        .form-text a {
+            color: #7b0828;
+            text-decoration: none;
+        }
+        .form-text a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 1024px) {
+            .profile {
+                position: static;
+                margin: 2rem auto;
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            .profile {
+                margin: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -216,7 +380,7 @@ if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) 
                     
                     <?php if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
                         <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                            <div class="row g-3">
+                            <div class="">
                                 <div class="col-md-6">
                                     <label for="postagem_nome" class="form-label">
                                         <i class="fas fa-heading"></i> Título <span class="text-danger">*</span>
