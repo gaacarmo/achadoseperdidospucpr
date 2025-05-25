@@ -133,10 +133,11 @@ if (can_send_headers()) {
             max-width: 300px;
         }
         .profile img {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin-bottom: 1rem;
+            object-fit: cover;
+            border: 3px solid #eee;
         }
         .profile h3 {
             margin: 0;
@@ -252,7 +253,7 @@ if (can_send_headers()) {
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>
-                     Início
+                    Início
                 </a>
             </div>
             <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
@@ -266,14 +267,14 @@ if (can_send_headers()) {
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
-                     Entrar
+                    Entrar
                 </a>
             </div>
             <?php endif; ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=publicar">
                     <i class="fas fa-plus"></i>
-                     Publicar
+                    Publicar
                 </a>
             </div>
         </div>
@@ -291,8 +292,19 @@ if (can_send_headers()) {
 
     <?php
     if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
+        $conexao = conecta_db();
+
+        $query = "SELECT foto_perfil FROM Usuario WHERE usuario_id = ?";
+        $stmt = $conexao->prepare($query);
+
+        $stmt->bind_param("i", $_SESSION['usuario_id']);
+        $stmt -> execute();
+
+        $resultado = $stmt->get_result();
+        $usuario = $resultado->fetch_assoc();
+
         echo "<div class='profile'>";
-        echo "<img src='https://via.placeholder.com/80' alt='Foto de perfil'>";
+        echo "<img src='{$usuario['foto_perfil']}' alt='Foto de perfil'>";
         echo "<h3>{$_SESSION['usuario']}</h3>";
         echo "<p>@{$_SESSION['usuario']}</p>";
         echo "<button class='btn btn-danger' onclick=\"window.location.href='include.php?dir=paginas&file=editar'\">Editar Perfil</button>";

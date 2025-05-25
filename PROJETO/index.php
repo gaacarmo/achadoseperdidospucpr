@@ -165,10 +165,11 @@ $resultado = $obj->query($query);
             max-width: 300px;
         }
         .profile img {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin-bottom: 1rem;
+            object-fit: cover;
+            border: 3px solid #eee;
         }
         .profile h3 {
             margin: 0;
@@ -265,28 +266,28 @@ $resultado = $obj->query($query);
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>
-                     Início
+                    Início
                 </a>
             </div>
             <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=editar">
                     <i class="fas fa-user"></i>
-                     Perfil
+                    Perfil
                 </a>
             </div>
             <?php else: ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
-                     Login
+                    Login
                 </a>
             </div>
             <?php endif; ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=publicar">
                     <i class="fas fa-plus"></i>
-                     Publicar
+                    Publicar
                 </a>
             </div>
         </div>

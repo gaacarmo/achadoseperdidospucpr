@@ -74,11 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             <i class="fas fa-user"></i> Nome de Usuário <span class="text-danger">*</span>
                         </label>
                         <input type="text" 
-                               class="form-control" 
-                               id="nome_usuario" 
-                               name="nome_usuario" 
-                               required
-                               placeholder="Digite seu nome de usuário">
+                            class="form-control" 
+                            id="nome_usuario" 
+                            name="nome_usuario" 
+                            required
+                            placeholder="Digite seu nome de usuário">
                         <div class="invalid-feedback">Por favor, digite seu nome de usuário.</div>
                     </div>
 
@@ -87,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             <i class="fas fa-lock"></i> Senha <span class="text-danger">*</span>
                         </label>
                         <input type="password" 
-                               class="form-control" 
-                               id="senha" 
-                               name="senha" 
-                               required
-                               placeholder="Digite sua senha">
+                            class="form-control" 
+                            id="senha" 
+                            name="senha" 
+                            required
+                            placeholder="Digite sua senha">
                         <div class="invalid-feedback">Por favor, digite sua senha.</div>
                     </div>
 

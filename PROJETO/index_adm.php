@@ -9,12 +9,12 @@
 <body>
     <nav>
         <div class="nav-img">
-            <a href="index_adm.php"><img src="/Documentacao/Logo.png" alt="Logo do site"></a>
+            <a href="index_adm.php"><img src="../Documentacao/Logo.png" alt="Logo do site"></a>
         </div>
         <ul>
             <li><a href="index_adm.php">Home</a></li>
-            <li><a href="paginas_adm/lista_usuarios.php">Listar Usuários</a></li>
-            <li><a href="#">Verficação de posts</a></li>
+            <li><a href="include_adm.php?dir=paginas_adm&file=lista_usuarios">Listar Usuários</a></li>
+            <li><a href="include_adm.php?dir=paginas_adm$file=verificacao_post">Verficação de posts</a></li>
             <li><a href="#">Relatórios</a></li>
         </ul>
     </nav>
