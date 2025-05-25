@@ -50,72 +50,134 @@ if (isset($_POST['email'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f8fa;
-            color: #0f1419;
-            overflow-x: hidden;
-        }
-        .form-container {
-            background-color: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            margin: 2rem auto;
-            max-width: 800px;
-        }
-        .form-label {
-            font-weight: 500;
-            color: #0f1419;
-        }
-        .form-control, .form-select {
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            border: 1px solid #ddd;
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: #7b0828;
-            box-shadow: 0 0 0 0.2rem rgba(123, 8, 40, 0.25);
-        }
-        .btn-danger {
-            background-color: #7b0828;
-            border-color: #7b0828;
-        }
-        .btn-danger:hover {
-            background-color: #5a061f;
-            border-color: #5a061f;
-        }
-        .alert {
-            border-radius: 8px;
-        }
-        .mobile-menu-toggle {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1001;
-            background: #7b0828;
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-            .form-container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            .row {
-                margin: 0;
-            }
-            .col-md-6 {
-                padding: 0;
-            }
-        }
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f8fa;
+    color: #0f1419;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.btn-danger,
+.mobile-menu-toggle,
+.publicar-btn {
+    background-color: #7b0828;
+    border-color: #7b0828;
+    color: white;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: #0f1419;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    background-color: #f5f8fa;
+    color: #7b0828;
+}
+
+.nav-link i, .nav-link img {
+    margin-right: 0.75rem;
+    width: 20px;
+    height: 20px;
+}
+
+
+.content {
+    margin-left: 280px;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #7b0828;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+.text-muted,
+.form-text {
+    color: #536471 !important;
+}
+
+.form-text a {
+    color: #7b0828;
+    text-decoration: none;
+}
+
+.form-text a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 1024px) {
+    .profile {
+        position: static;
+        margin: 2rem auto;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .form-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .row {
+        margin: 0;
+    }
+
+    .col-md-6 {
+        padding: 0;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .profile {
+        margin: 1rem;
+    }
+}
+
     </style>
 </head>
 

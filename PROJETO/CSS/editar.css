@@ -10,13 +10,7 @@ body {
     background-color: #f8f9fa;
 }
 
-.form-container {
-    background-color: #ffffff;
-    padding: clamp(20px, 3vw, 40px);
-    border-radius: 8px;
-    width: min(95%, 600px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+
 
 h2 {
     color: #7b0828;

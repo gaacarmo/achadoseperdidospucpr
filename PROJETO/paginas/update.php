@@ -112,6 +112,26 @@ if (isset($_POST['nova_senha']) && isset($_POST['confirmar_senha']) && isset($_P
         .alert {
             border-radius: 8px;
         }
+            .nav-link {
+            display: flex;
+            align-items: center;
+            color: #0f1419;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f8fa;
+            color: #7b0828;
+        }
+        .nav-link i, .nav-link img {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+        }
         .mobile-menu-toggle {
             display: none;
             position: fixed;

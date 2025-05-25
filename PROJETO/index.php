@@ -31,6 +31,7 @@ $resultado = $obj->query($query);
             padding: 0;
             overflow-x: hidden;
         }
+        
         .sidebar {
             position: fixed;
             left: 0;
@@ -42,6 +43,12 @@ $resultado = $obj->query($query);
             box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             transition: transform 0.3s ease;
+        }
+        .sidebar .logo-nav{
+            width: 50px;
+            height: 50px;
+            color: #7b0828;
+            
         }
         .sidebar .title {
             font-size: 1.5rem;
@@ -164,7 +171,9 @@ $resultado = $obj->query($query);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             max-width: 300px;
         }
-        .profile img {
+          .profile img {
+            border-radius: 50%;
+            margin-bottom: 1rem;
             width: 120px;
             height: 120px;
             border-radius: 50%;
@@ -182,8 +191,10 @@ $resultado = $obj->query($query);
         }
         .profile .btn {
             width: 100%;
+          
             margin-bottom: 0.5rem;
         }
+        
         .side-help-box {
             background-color: white;
             border-radius: 16px;
@@ -269,32 +280,33 @@ $resultado = $obj->query($query);
 
     <div class="sidebar" id="sidebar">
         <div>
-            <div class="title">Achei na PUCPR</div>
+            <div class="title"><img src="./images/Group.svg"  class="logo-nav"alt="">Achei na PUCPR</div>
             <div class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-home"></i>
-                    Início
+                     Início
                 </a>
             </div>
             <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=editar">
                     <i class="fas fa-user"></i>
-                    Perfil
+                     Perfil
                 </a>
             </div>
             <?php else: ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=login">
                     <i class="fas fa-sign-in-alt"></i>
-                    Login
+                     Entrar
                 </a>
             </div>
+            
             <?php endif; ?>
             <div class="nav-item">
                 <a class="nav-link" href="include.php?dir=paginas&file=publicar">
                     <i class="fas fa-plus"></i>
-                    Publicar
+                     Publicar
                 </a>
             </div>
         </div>
