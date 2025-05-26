@@ -175,7 +175,7 @@ $resultado = $obj->query($query);
         echo "<img src='{$fotoPerfil}' alt='Foto de perfil'>";
         echo "<h3>{$_SESSION['usuario']}</h3>";
         echo "<p>@{$_SESSION['usuario']}</p>";
-        echo "<button class='btn btn-danger' onclick=\"window.location.href='include.php?dir=paginas&file=editar'\">Editar Perfil</button>";
+        echo "<button class='btn btn-dange' onclick=\"window.location.href='include.php?dir=paginas&file=editar'\">Editar Perfil</button>";
         echo "<button class='btn btn-outline-secondary' onclick=\"window.location.href='include.php?dir=paginas&file=del_usu'\">Sair</button>";
         echo '</div>';
     } else {

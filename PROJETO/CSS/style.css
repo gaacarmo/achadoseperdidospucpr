@@ -25,6 +25,11 @@
             color: #7b0828;
             
         }
+      .btn-dange {
+            background-color: #7b0828;
+            color: #fff;
+          
+        }
         .sidebar .title {
             font-size: 1.5rem;
             font-weight: bold;
