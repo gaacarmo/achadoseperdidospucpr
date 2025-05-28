@@ -32,14 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     } else {
         // caso nao seja moderador, tenta na tabela Usuario
-        $stmt = $obj->prepare("SELECT nome_usuario, senha, usuario_id FROM Usuario WHERE nome_usuario = ?");
+        $stmt = $obj->prepare("SELECT nome_usuario, senha, usuario_id, usuario_ativo FROM Usuario WHERE nome_usuario = ?");
         $stmt->bind_param("s", $nome_usuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
 
         if ($resultado && $resultado->num_rows > 0) {
             $user = $resultado->fetch_assoc();
-            if (password_verify($senha, $user['senha'])) {
+           
+            if (!$user['usuario_ativo']) {
+                $error_message = "Usuário deletado por favor fale com o administrador";   
+            } elseif (password_verify($senha, $user['senha'])) {
                 $_SESSION['is_logged_user'] = true;
                 $_SESSION['usuario_id'] = $user['usuario_id'];
                 $_SESSION['usuario'] = $user['nome_usuario'];
