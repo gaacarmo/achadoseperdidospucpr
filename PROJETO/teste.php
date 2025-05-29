@@ -180,21 +180,17 @@ $resultado = $obj->query($query);
                             <?php endwhile; ?>
 
                             <?php if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user']): ?>
-                            <button type="button" class="btn btn-sm btn-link btn-toggle-resposta">
-                            <i class="fas fa-reply"></i> Responder
-                        </button>
-
-                        <form action="./paginas/inserir_comentario.php" method="post" class="mt-2 ms-4 form-resposta" style="display: none;">
-                            <input type="hidden" name="postagem_id" value="<?= $postId ?>">
-                            <input type="hidden" name="comentario_pai_id" value="<?= $comentarioId ?>">
-                            <div class="mb-2">
-                                <textarea name="comentario_conteudo" class="form-control" placeholder="Responder comentário..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-sm btn-secondary">
-                                <i class="fas fa-reply"></i> Enviar resposta
-                            </button>
-                        </form>
-                        <?php endif; ?>
+                            <form action="./paginas/inserir_comentario.php" method="post" class="mt-2 ms-4">
+                                <input type="hidden" name="postagem_id" value="<?= $postId ?>">
+                                <input type="hidden" name="comentario_pai_id" value="<?= $comentarioId ?>">
+                                <div class="mb-2">
+                                    <textarea name="comentario_conteudo" class="form-control" placeholder="Responder comentário..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-reply"></i> Responder
+                                </button>
+                            </form>
+                            <?php endif; ?>
                         </div>
                         <?php endwhile; ?>
 
@@ -291,14 +287,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     tipoCheckboxes.forEach(cb => cb.addEventListener('change', aplicarFiltros));
     categoriaCheckboxes.forEach(cb => cb.addEventListener('change', aplicarFiltros));
-});
-document.querySelectorAll('.btn-toggle-resposta').forEach(botao => {
-    botao.addEventListener('click', function () {
-        const form = this.nextElementSibling;
-        if (form && form.classList.contains('form-resposta')) {
-            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-        }
-    });
 });
 </script>
 
