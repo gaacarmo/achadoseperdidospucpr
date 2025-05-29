@@ -9,7 +9,7 @@ create table Usuario(
     email VARCHAR(100) NOT NULL UNIQUE,
     curso_usuario VARCHAR(50) NOT NULL,
     foto_perfil VARCHAR(255),
-    usuario_ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    usuario_ativo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 create table Moderador(
