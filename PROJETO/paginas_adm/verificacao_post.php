@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
         } elseif ($_POST['acao'] === 'deletar' && isset($_SESSION['moderador_id'])) {
             // Deletar postagem
-            $stmt = $obj->prepare("DELETE FROM Postagem WHERE postagem_id = ?");
+            $stmt = $obj->prepare("UPDATE Postagem SET postagem_ativa = FALSE WHERE postagem_id = ?");
             $stmt->bind_param("i", $postagem_id);
             $stmt->execute();
         }
