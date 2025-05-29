@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $query = "SELECT p.*, u.nome_usuario, u.foto_perfil, u.usuario_ativo
         FROM Postagem p 
         LEFT JOIN Usuario u ON p.id_usuario = u.usuario_id 
-        WHERE p.id_admin IS NULL AND (u.usuario_ativo IS NULL OR u.usuario_ativo != false)
+        WHERE p.id_admin IS NULL AND (u.usuario_ativo IS NULL OR u.usuario_ativo != false) AND p.postagem_ativa = 1
         ORDER BY p.postagem_id DESC";
 $resultado = $obj->query($query);
 ?>
