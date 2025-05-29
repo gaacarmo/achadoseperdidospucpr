@@ -41,9 +41,11 @@ create table Comentarios(
     comentario_id INT PRIMARY KEY AUTO_INCREMENT,
     comentario_data DATETIME DEFAULT CURRENT_TIMESTAMP,
     comentario_conteudo VARCHAR(500) NOT NULL,
-    comentario_privado BOOLEAN,
+    comentario_privado BOOLEAN DEFAULT FALSE,
     postagem_id INT NOT NULL,
     usuario_id INT NOT NULL, 
+    comentario_pai_id INT DEFAULT NULL,
+    FOREIGN KEY (comentario_pai_id) REFERENCES Comentarios(comentario_id) ON DELETE CASCADE,
     FOREIGN KEY (postagem_id) REFERENCES Postagem(postagem_id),
     FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
 );
