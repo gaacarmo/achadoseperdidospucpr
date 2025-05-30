@@ -161,6 +161,9 @@ $resultado = $obj->query($query);
                         <div class="comentario mb-2">
                             <strong><?= htmlspecialchars($comentario['nome_usuario']) ?>:</strong>
                             <?= htmlspecialchars($comentario['comentario_conteudo']) ?>
+                            <?php if ($comentario['comentario_privado']): ?>
+                                <span class="badge bg-warning text-dark ms-2">Privado</span>
+                            <?php endif; ?>
                             <small class="text-muted d-block"><?= date('d/m/Y H:i', strtotime($comentario['comentario_data'])) ?></small>
 
                             <?php
@@ -171,12 +174,26 @@ $resultado = $obj->query($query);
                             $resRespostas = $stmtRespostas->get_result();
 
                             while ($resposta = $resRespostas->fetch_assoc()):
+                            $visivel = true;
+
+                            if ($resposta['comentario_privado']) {
+                                $usuarioAtual = $_SESSION['usuario_id'] ?? null;
+                                if ($usuarioAtual !== $linha['id_usuario'] && $usuarioAtual !== $resposta['usuario_id']) {
+                                    $visivel = false;
+                                }
+                            }
+
+                            if ($visivel):
                             ?>
                             <div class="resposta ms-4 mb-2">
                                 <strong><?= htmlspecialchars($resposta['nome_usuario']) ?>:</strong>
                                 <?= htmlspecialchars($resposta['comentario_conteudo']) ?>
+                                <?php if ($resposta['comentario_privado']): ?>
+                                    <span class="badge bg-warning text-dark ms-2">Privado</span>
+                                <?php endif; ?>
                                 <small class="text-muted d-block"><?= date('d/m/Y H:i', strtotime($resposta['comentario_data'])) ?></small>
                             </div>
+                            <?php endif; ?>
                             <?php endwhile; ?>
 
                             <?php if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user']): ?>
@@ -190,10 +207,14 @@ $resultado = $obj->query($query);
                             <div class="mb-2">
                                 <textarea name="comentario_conteudo" class="form-control" placeholder="Responder comentário..." required></textarea>
                             </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="comentario_privado" value="1" id="privado<?= $comentarioId ?>">
+                                <label class="form-check-label" for="privado<?= $comentarioId ?>">Comentário privado</label>
+                            </div>
                             <button type="submit" class="btn btn-sm btn-secondary">
                                 <i class="fas fa-reply"></i> Enviar resposta
                             </button>
-                        </form>
+                         </form>
                         <?php endif; ?>
                         </div>
                         <?php endwhile; ?>

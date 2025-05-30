@@ -3,17 +3,15 @@ session_start();
 require_once 'conecta_db.php';
 $obj = conecta_db();
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['usuario_id'])) {
-    $postagem_id = $_POST['postagem_id'];
-    $conteudo = $_POST['comentario_conteudo'];
-    $usuario_id = $_SESSION['usuario_id'];
-    $comentario_pai_id = $_POST['comentario_pai_id'] ?? null;
+$usuario_id = $_SESSION['usuario_id'];
+$postagem_id = $_POST['postagem_id'];
+$comentario_conteudo = trim($_POST['comentario_conteudo']);
+$comentario_pai_id = $_POST['comentario_pai_id'] ?? null;
+$comentario_privado = isset($_POST['comentario_privado']) ? 1 : 0;
 
-    $sql = "INSERT INTO Comentarios (comentario_conteudo, comentario_data, usuario_id, postagem_id, comentario_pai_id)
-            VALUES (?, NOW(), ?, ?, ?)";
-
-    $stmt = $obj->prepare($sql);
-    $stmt->bind_param("siii", $conteudo, $usuario_id, $postagem_id, $comentario_pai_id);
+if (!empty($comentario_conteudo)) {
+    $stmt = $obj->prepare("INSERT INTO Comentarios (comentario_conteudo, comentario_privado, postagem_id, usuario_id, comentario_pai_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("siiii", $comentario_conteudo, $comentario_privado, $postagem_id, $usuario_id, $comentario_pai_id);
     $stmt->execute();
 }
 
