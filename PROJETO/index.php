@@ -1,13 +1,18 @@
 <?php
+// Inicia a sessão se ainda não estiver iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'paginas/conecta_db.php';
-$obj = conecta_db();
 
+// Importa o arquivo de conexão com o banco de dados
+require_once 'paginas/conecta_db.php';
+$obj = conecta_db(); // Conecta ao banco de dados
+
+// Consulta que busca as postagens junto com nome de usuário e foto de perfil
 $query = "SELECT p.*, u.nome_usuario, foto_perfil
         FROM Postagem p 
         LEFT JOIN Usuario u ON p.id_usuario = u.usuario_id 
+       
         ORDER BY p.postagem_id DESC";
 $resultado = $obj->query($query);
 ?>
@@ -15,9 +20,12 @@ $resultado = $obj->query($query);
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Configurações de codificação e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AcheiNaPuc - Início</title>
+
+    <!-- Importa CSS do Bootstrap e Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -25,54 +33,53 @@ $resultado = $obj->query($query);
 </head>
 
 <body>
-<!-- ... (MENU SIDEBAR MANTIDO INALTERADO) ... -->
-  <button class="mobile-menu-toggle" id="mobileMenuToggle">
-        <i class="fas fa-bars"></i>
-    </button>
-    <div class="sidebar" id="sidebar">
-        <div>
-            <div class="title"><img src="./images/Group.svg"  class="logo-nav"alt="">Achei na PUCPR</div>
-            <div class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-home"></i>
-                     Início
-                </a>
-            </div>
-            <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
-            <div class="nav-item">
-                <a class="nav-link" href="include.php?dir=paginas&file=editar">
-                    <i class="fas fa-user"></i>
-                     Perfil
-                </a>
-            </div>
-            <?php else: ?>
-            <div class="nav-item">
-                <a class="nav-link" href="include.php?dir=paginas&file=login">
-                    <i class="fas fa-sign-in-alt"></i>
-                     Entrar
-                </a>
-            </div>
-            
-            <?php endif; ?>
-            <div class="nav-item">
-                <a class="nav-link" href="include.php?dir=paginas&file=publicar">
-                    <i class="fas fa-plus"></i>
-                     Publicar
-                </a>
+<!-- Botão de menu responsivo -->
+<button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <i class="fas fa-bars"></i>
+</button>
 
+<!-- Menu lateral (sidebar) -->
+<div class="sidebar" id="sidebar">
+    <div>
+        <!-- Logo e título -->
+        <div class="title"><img src="./images/Group.svg" class="logo-nav" alt="">Achei na PUCPR</div>
+
+        <!-- Link para página inicial -->
+        <div class="nav-item">
+            <a class="nav-link" href="index.php"><i class="fas fa-home"></i> Início</a>
+        </div>
+
+        <!-- Verifica se o usuário está logado -->
+        <?php if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true): ?>
+        <div class="nav-item">
+            <a class="nav-link" href="include.php?dir=paginas&file=editar"><i class="fas fa-user"></i> Perfil</a>
+        </div>
+        <?php else: ?>
+        <div class="nav-item">
+            <a class="nav-link" href="include.php?dir=paginas&file=login"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+        </div>
+        <?php endif; ?>
+
+        <!-- Link para publicar -->
+        <div class="nav-item">
+            <a class="nav-link" href="include.php?dir=paginas&file=publicar"><i class="fas fa-plus"></i> Publicar</a>
+        </div>
+
+        <!-- Filtros por tipo -->
+        <div class="mb-3">
+            <label class="form-check-label me-2"><b>Filtrar por tipo de postagem:</b></label>
+            <div class="form-check form-check">
+                <input class="form-check-input filtro-tipo" type="checkbox" value="Achei" id="filtroAchei">
+                <label class="form-check-label" for="filtroAchei">Achei</label>
             </div>
-                <div class="mb-3">
-                <label class="form-check-label me-2"><b>Filtrar por tipo de postagem:</b></label>
-                <div class="form-check form-check">
-                    <input class="form-check-input filtro-tipo" type="checkbox" value="Achei" id="filtroAchei">
-                    <label class="form-check-label" for="filtroAchei">Achei</label>
-                </div>
-                <div class="form-check form-check">
-                    <input class="form-check-input filtro-tipo" type="checkbox" value="Perdi" id="filtroPerdi">
-                    <label class="form-check-label" for="filtroPerdi">Perdi</label>
-                </div>
-                <br>
-                <div class="mb-3">
+            <div class="form-check form-check">
+                <input class="form-check-input filtro-tipo" type="checkbox" value="Perdi" id="filtroPerdi">
+                <label class="form-check-label" for="filtroPerdi">Perdi</label>
+            </div>
+
+            <!-- Filtros por categoria -->
+            <br>
+            <div class="mb-3">
                 <label class="form-check-label me-2"><b>Filtrar por categoria:</b></label>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input filtro-categoria" type="checkbox" value="Eletrônico" id="catEletronico">
@@ -91,60 +98,45 @@ $resultado = $obj->query($query);
                     <label class="form-check-label" for="catOutro">Outro</label>
                 </div>
             </div>
+        </div>
 
-            <button class="publicar-btn" onclick="window.location.href='include.php?dir=paginas&file=publicar'">
+        <!-- Botão extra de publicar -->
+        <button class="publicar-btn" onclick="window.location.href='include.php?dir=paginas&file=publicar'">
             <i class="fas fa-plus"></i> Publicar
         </button>
-            
-        </div>
-        </div>
-        </div>
-        
     </div>
+</div>
 
+<!-- Conteúdo principal -->
 <div class="content">
     <div class="container mt-4">
-        <h2 class="mb-4">
-            <i class="fas fa-newspaper"></i> Postagens Recentes
-        </h2>
+        <h2 class="mb-4"><i class="fas fa-newspaper"></i> Postagens Recentes</h2>
 
-        <?php 
-        if($resultado->num_rows > 0):
-            while ($linha = $resultado->fetch_assoc()): 
-                $postId = $linha['postagem_id'];
-        ?>
+        <?php if($resultado->num_rows > 0): while ($linha = $resultado->fetch_assoc()): $postId = $linha['postagem_id']; ?>
         <div class="post-container" data-tipo="<?= htmlspecialchars($linha['postagem_usuario_tipo']) ?>" data-categoria="<?= htmlspecialchars($linha['postagem_categoria']) ?>">
             <?php if (!empty($linha['postagem_image'])): ?>
                 <img src="<?= htmlspecialchars($linha['postagem_image']) ?>" alt="Imagem do objeto">
             <?php endif; ?>
-            
+
             <div class="post-content">
                 <h5>
                     <?= htmlspecialchars($linha['postagem_nome']) ?>
                     <?php if(!empty($linha['id_admin'])): ?>
                         <i class="fas fa-check-circle text-primary" title="Postagem verificada"></i>
                     <?php endif; ?>
-                    
                     <span class="badge bg-<?= $linha['postagem_usuario_tipo'] === 'Achei' ? 'success' : 'danger' ?>">
                         <?= htmlspecialchars($linha['postagem_usuario_tipo']) ?>
                     </span>
                 </h5>
                 <p><?= htmlspecialchars($linha['postagem_descricao']) ?></p>
                 <p><?= htmlspecialchars($linha['postagem_categoria']) ?></p>
-                <p>
-                    <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($linha['postagem_local']) ?> |
-                    <i class="fas fa-calendar"></i> <?= htmlspecialchars($linha['postagem_data']) ?>
-                </p>
+                <p><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($linha['postagem_local']) ?> | <i class="fas fa-calendar"></i> <?= htmlspecialchars($linha['postagem_data']) ?></p>
                 <?php if (!empty($linha['nome_usuario'])): ?>
-                    <p class="text-muted mb-1">
-                        <i class="fas fa-user"></i> Postado por: <?= htmlspecialchars($linha['nome_usuario']) ?>
-                    </p>
+                    <p class="text-muted mb-1"><i class="fas fa-user"></i> Postado por: <?= htmlspecialchars($linha['nome_usuario']) ?></p>
                 <?php endif; ?>
 
                 <div class="post-actions">
-                    <button>
-                        <i class="far fa-thumbs-up"></i> Curtir
-                    </button>
+                    <button><i class="far fa-thumbs-up"></i> Curtir</button>
                     <button type="button" class="btn-toggle-comentarios">
                         <h6><i class="fas fa-comments"></i> Comentários</h6>
                     </button>
@@ -216,8 +208,19 @@ $resultado = $obj->query($query);
                             </button>
                          </form>
                         <?php endif; ?>
+                            
+                            <form action="./paginas/inserir_comentario.php" method="post" class="mt-2 ms-4 form-resposta" style="display: none;">
+                                <input type="hidden" name="postagem_id" value="<?= $postId ?>">
+                                <input type="hidden" name="comentario_pai_id" value="<?= $comentarioId ?>">
+                                <div class="mb-2">
+                                    <textarea name="comentario_conteudo" class="form-control" placeholder="Responder comentário..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-reply"></i> Enviar resposta</button>
+                            </form>
+                     
+                            <?php endwhile; ?>
                         </div>
-                        <?php endwhile; ?>
+                        
 
                         <?php if (isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user']): ?>
                         <form action="./paginas/inserir_comentario.php" method="post" class="mt-2">
@@ -225,25 +228,20 @@ $resultado = $obj->query($query);
                             <div class="mb-2">
                                 <textarea name="comentario_conteudo" class="form-control" placeholder="Digite um comentário..." required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                <i class="fas fa-paper-plane"></i> Enviar
-                            </button>
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-paper-plane"></i> Enviar</button>
                         </form>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-        <?php endwhile; ?>
-        <?php else: ?>
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i> Nenhuma postagem encontrada
-        </div>
+        <?php endwhile; else: ?>
+        <div class="alert alert-info"><i class="fas fa-info-circle"></i> Nenhuma postagem encontrada</div>
         <?php endif; ?>
     </div>
 </div>
 
-<!-- PERFIL OU AJUDA LATERAL -->
+<!-- Exibe perfil ou caixa de ajuda ao lado -->
 <?php
 if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
     $usuario_id = $_SESSION['usuario_id'];
@@ -278,8 +276,10 @@ if(isset($_SESSION['is_logged_user']) && $_SESSION['is_logged_user'] === true) {
 }
 ?>
 
+<!-- Scripts JS para interação -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Mostrar ou ocultar comentários
     document.querySelectorAll('.btn-toggle-comentarios').forEach(botao => {
         botao.addEventListener('click', function () {
             const comentariosDiv = this.closest('.post-container').querySelector('.comentarios');
@@ -289,10 +289,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Oculta todos os comentários inicialmente
     document.querySelectorAll('.comentarios').forEach(div => {
         div.style.display = 'none';
     });
 
+    // Filtros por tipo e categoria
     const tipoCheckboxes = document.querySelectorAll('.filtro-tipo');
     const categoriaCheckboxes = document.querySelectorAll('.filtro-categoria');
     const posts = document.querySelectorAll('.post-container');
@@ -313,6 +315,8 @@ document.addEventListener('DOMContentLoaded', function () {
     tipoCheckboxes.forEach(cb => cb.addEventListener('change', aplicarFiltros));
     categoriaCheckboxes.forEach(cb => cb.addEventListener('change', aplicarFiltros));
 });
+
+// Mostrar formulário de resposta
 document.querySelectorAll('.btn-toggle-resposta').forEach(botao => {
     botao.addEventListener('click', function () {
         const form = this.nextElementSibling;

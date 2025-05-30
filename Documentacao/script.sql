@@ -51,7 +51,9 @@ create table Comentarios(
 );
 
 create table Curtidas(
-	curtida_id INT PRIMARY KEY AUTO_INCREMENT,
+    curtida_id INT PRIMARY KEY AUTO_INCREMENT,
+    postagem_id INT NOT NULL,
+    usuario_id INT NOT NULL,
     FOREIGN KEY (postagem_id) REFERENCES Postagem(postagem_id),
     FOREIGN KEY (usuario_id) REFERENCES Usuario(usuario_id)
 );
