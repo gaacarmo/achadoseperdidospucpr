@@ -186,10 +186,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['curtir_postagem'])) {
                             <span class="like-count"><?= $linha['total_curtidas'] ?></span>
                         </button>
                     </form>
-                
-                    <button type="button" class="btn-toggle-comentarios">
+                    <form method="post" style="display: inline;" >
+                        <button type="button" class="btn-toggle-comentarios">
                         <h6><i class="fas fa-comments"></i> Comentários</h6>
-                    </button>
+                        </button>
+                    </form>
+                    
 
                     <div class="comentarios mt-3">
                         <?php
