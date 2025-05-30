@@ -15,7 +15,7 @@
             <li><a href="index_adm.php">Home</a></li>
             <li><a href="include_adm.php?dir=paginas_adm&file=lista_usuarios">Listar Usuários</a></li>
             <li><a href="include_adm.php?dir=paginas_adm&file=verificacao_post">Verficação de posts</a></li>
-            <li><a href="#">Relatórios</a></li>
+            <li><a href="include_adm.php?dir=paginas_adm&file=menu_relatorio">Relatórios</a></li>
         </ul>
     </nav>
 

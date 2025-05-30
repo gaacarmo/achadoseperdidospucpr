@@ -30,6 +30,7 @@ create table Postagem(
     postagem_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     postagem_image VARCHAR(255),
     postagem_usuario_tipo VARCHAR(10) NOT NULL,
+    postagem_ativa BOOLEAN NOT NULL DEFAULT TRUE
     id_usuario INT NOT NULL,
     id_admin INT,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(usuario_id),

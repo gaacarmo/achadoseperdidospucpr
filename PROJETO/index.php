@@ -9,12 +9,55 @@ require_once 'paginas/conecta_db.php';
 $obj = conecta_db(); // Conecta ao banco de dados
 
 // Consulta que busca as postagens junto com nome de usuário e foto de perfil
-$query = "SELECT p.*, u.nome_usuario, foto_perfil
+$query = "SELECT p.*, u.nome_usuario, u.foto_perfil, 
+            COUNT(c.curtida_id) as total_curtidas,
+            EXISTS(SELECT 1 FROM Curtidas WHERE postagem_id = p.postagem_id AND usuario_id = ?) as usuario_curtiu
         FROM Postagem p 
         LEFT JOIN Usuario u ON p.id_usuario = u.usuario_id 
-        WHERE p.postagem_ativa = 1
+        LEFT JOIN Curtidas c ON p.postagem_id = c.postagem_id
+        WHERE p.postagem_ativa = true
+        GROUP BY p.postagem_id
         ORDER BY p.postagem_id DESC";
-$resultado = $obj->query($query);
+$stmt = $obj->prepare($query);
+$usuario_id = isset($_SESSION['usuario_id']) ? $_SESSION['usuario_id'] : 0;
+$stmt->bind_param("i", $usuario_id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['curtir_postagem'])) {
+    if (!isset($_SESSION['is_logged_user']) || $_SESSION['is_logged_user'] !== true) {
+        echo "<script>alert('Você precisa estar logado para curtir postagens.');</script>";
+    } else {
+        $postagem_id = intval($_POST['postagem_id']);
+        $usuario_id = $_SESSION['usuario_id'];
+        
+        // Verifica se o usuário já curtiu esta postagem
+        $checkQuery = "SELECT * FROM Curtidas WHERE postagem_id = ? AND usuario_id = ?";
+        $stmt = $obj->prepare($checkQuery);
+        $stmt->bind_param("ii", $postagem_id, $usuario_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            // Remove a curtida se já existir
+            $deleteQuery = "DELETE FROM Curtidas WHERE postagem_id = ? AND usuario_id = ?";
+            $stmt = $obj->prepare($deleteQuery);
+            $stmt->bind_param("ii", $postagem_id, $usuario_id);
+            $stmt->execute();
+        } else {
+            // Adiciona a curtida
+            $insertQuery = "INSERT INTO Curtidas (postagem_id, usuario_id) VALUES (?, ?)";
+            $stmt = $obj->prepare($insertQuery);
+            $stmt->bind_param("ii", $postagem_id, $usuario_id);
+            $stmt->execute();
+        }
+        
+        // Redireciona para evitar reenvio do formulário
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit();
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +179,14 @@ $resultado = $obj->query($query);
                 <?php endif; ?>
 
                 <div class="post-actions">
-                    <button><i class="far fa-thumbs-up"></i> Curtir</button>
+                    <form method="post" style="display: inline;">
+                        <input type="hidden" name="postagem_id" value="<?= $postId ?>">
+                        <button type="submit" name="curtir_postagem" class="btn-like <?= $linha['usuario_curtiu'] ? 'liked' : '' ?>">
+                            <i class="far fa-thumbs-up"></i> 
+                            <span class="like-count"><?= $linha['total_curtidas'] ?></span>
+                        </button>
+                    </form>
+                
                     <button type="button" class="btn-toggle-comentarios">
                         <h6><i class="fas fa-comments"></i> Comentários</h6>
                     </button>
@@ -285,6 +335,31 @@ document.querySelectorAll('.btn-toggle-resposta').forEach(botao => {
         const form = this.nextElementSibling;
         if (form && form.classList.contains('form-resposta')) {
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+        }
+    });
+});
+
+document.querySelectorAll('.btn-like').forEach(button => {
+    button.addEventListener('click', function(e) {
+        if (!<?= isset($_SESSION['is_logged_user']) ? 'true' : 'false' ?>) {
+            e.preventDefault();
+            alert('Você precisa estar logado para curtir postagens.');
+            return;
+        }
+        
+        // Feedback visual imediato
+        const icon = this.querySelector('i');
+        const count = this.querySelector('.like-count');
+        const isLiked = this.classList.contains('liked');
+        
+        if (isLiked) {
+            this.classList.remove('liked');
+            count.textContent = parseInt(count.textContent) - 1;
+            icon.classList.replace('fas', 'far');
+        } else {
+            this.classList.add('liked');
+            count.textContent = parseInt(count.textContent) + 1;
+            icon.classList.replace('far', 'fas');
         }
     });
 });
