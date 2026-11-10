@@ -2,7 +2,7 @@
 
 **Achados e perdidos da PUCPR.** Quem perdeu algo no campus publica o item; quem encontrou, também. Os dois se acham pelos comentários (públicos ou privados) e combinam a devolução.
 
-**Demo:** _em breve_ · contas de teste: `demo` / `demo1234` (estudante) e `moderador` / `modera1234`
+**Demo:** [acheinapuc.onrender.com](https://acheinapuc.onrender.com) (pode levar ~40 s para acordar) · contas de teste: `demo` / `demo1234` (estudante) e `moderador` / `modera1234`
 
 ![Feed do AcheiNaPuc](docs/screenshot.png)
 
