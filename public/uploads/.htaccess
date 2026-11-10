@@ -1,0 +1,7 @@
+# Uploads nunca executam código.
+php_flag engine off
+RemoveHandler .php .phtml .phar
+<FilesMatch "\.(php|phtml|phar|html?|svg)$">
+    Require all denied
+</FilesMatch>
+Header set Content-Security-Policy "default-src 'none'"

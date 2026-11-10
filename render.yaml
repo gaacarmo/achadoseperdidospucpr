@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: acheinapuc
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: APP_DEBUG
+        value: "0"

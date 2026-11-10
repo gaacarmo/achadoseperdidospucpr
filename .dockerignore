@@ -1,0 +1,7 @@
+.git
+.env
+data
+public/uploads/*
+!public/uploads/.htaccess
+Documentacao
+*.md
